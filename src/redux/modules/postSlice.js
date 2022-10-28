@@ -1,11 +1,33 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
+const initialState = {
+  post: [
+    {
+      id: 1,
+      username: "kim",
+      content: "ㅡㅡ",
+      comment: [
+        { id: 1, comment: "zzzz" },
+        { id: 2, comment: "zssz" },
+        { id: 3, comment: "zzdasdz" },
+      ],
+    },
+    { id: 2, username: "lee", content: "ㅋㅋㅋㅋ" },
+    { id: 3, username: "park", content: "ㅠㅠ" },
+  ],
+  comment: [
+    { id: 1, comment: "zzzz" },
+    { id: 2, comment: "zssz" },
+    { id: 3, comment: "zzdasdz" },
+  ],
+};
+
 const accessToken = localStorage.getItem("Access_Token");
 const refreshToken = localStorage.getItem("Refresh_Token");
 
-export const __getmelon = createAsyncThunk(
-  "post/__getmelon",
+export const __getPost = createAsyncThunk(
+  "post/__getPost",
   async (payload, thunkAPI) => {
     try {
       const data = await axios.get(
@@ -18,8 +40,8 @@ export const __getmelon = createAsyncThunk(
   }
 );
 
-export const __addMelon = createAsyncThunk(
-  "post/__addMelon",
+export const __addPost = createAsyncThunk(
+  "post/__addPost",
   async (payload, thunkAPI) => {
     try {
       await axios
@@ -41,8 +63,8 @@ export const __addMelon = createAsyncThunk(
   }
 );
 
-export const __deleteMelon = createAsyncThunk(
-  "post/__deleteMelon",
+export const __deletePost = createAsyncThunk(
+  "post/__deletePost",
   async (payload, thunkAPI) => {
     try {
       const data = await axios.delete(
@@ -63,8 +85,8 @@ export const __deleteMelon = createAsyncThunk(
   }
 );
 
-export const __editMelon = createAsyncThunk(
-  "post/__editMelon",
+export const __editPost = createAsyncThunk(
+  "post/__editPost",
   async (payload, thunkAPI) => {
     console.log("payload", payload);
     try {
@@ -94,62 +116,62 @@ const postSlice = createSlice({
 
   reducers: {},
   extraReducers: {
-    //__getmelon
-    [__getmelon.pending]: (state) => {
+    //__getPost
+    [__getPost.pending]: (state) => {
       state.isLoading = true;
     },
-    [__getmelon.fulfilled]: (state, action) => {
+    [__getPost.fulfilled]: (state, action) => {
       state.isLoading = false;
-      state.melon = action.payload;
+      state.post = action.payload;
     },
-    [__getmelon.rejected]: (state, action) => {
+    [__getPost.rejected]: (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
     },
-    //__addMelon
-    [__addMelon.pending]: (state) => {
+    //__addPost
+    [__addPost.pending]: (state) => {
       state.isLoading = true;
     },
-    [__addMelon.fulfilled]: (state, action) => {
+    [__addPost.fulfilled]: (state, action) => {
       state.isLoading = false;
-      state.melon = action.payload;
+      state.post = action.payload;
     },
-    [__addMelon.rejected]: (state, action) => {
+    [__addPost.rejected]: (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
     },
 
-    //__deleteMelon
-    [__deleteMelon.pending]: (state) => {
+    //__deletePost
+    [__deletePost.pending]: (state) => {
       state.isLoading = true;
     },
-    [__deleteMelon.fulfilled]: (state, action) => {
+    [__deletePost.fulfilled]: (state, action) => {
       state.isLoading = false;
-      state.melon = state.melon.filter((melon) => melon.id !== action.payload);
+      state.post = state.post.filter((post) => post.id !== action.payload);
     },
 
-    [__deleteMelon.rejected]: (state, action) => {
+    [__deletePost.rejected]: (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
     },
-    //__editMelon
-    [__editMelon.pending]: (state) => {
+    //__editPost
+    [__editPost.pending]: (state) => {
       state.isLoading = true;
     },
-    [__editMelon.fulfilled]: (state, action) => {
+    [__editPost.fulfilled]: (state, action) => {
       state.isLoading = false;
 
-      const indexId = state.melon.findIndex((melon) => {
-        if (melon.id == action.payload.id) {
+      const indexId = state.post.findIndex((post) => {
+        if (post.id == action.payload.id) {
           return true;
         }
         return false;
       });
-      state.melon[indexId] = action.payload;
+      state.post[indexId] = action.payload;
 
-      state.melon = [...state.melon];
+      state.post = [...state.post];
     },
-    [__editMelon.rejected]: (state, action) => {
+    [__editPost.rejected]: (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
     },

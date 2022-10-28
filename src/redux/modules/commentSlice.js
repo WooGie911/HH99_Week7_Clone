@@ -1,6 +1,28 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
+const initialState = {
+  post: [
+    {
+      id: 1,
+      username: "kim",
+      content: "ㅡㅡ",
+      comment: [
+        { id: 1, comment: "zzzz" },
+        { id: 2, comment: "zssz" },
+        { id: 3, comment: "zzdasdz" },
+      ],
+    },
+    { id: 2, username: "lee", content: "ㅋㅋㅋㅋ" },
+    { id: 3, username: "park", content: "ㅠㅠ" },
+  ],
+  comment: [
+    { id: 1, comment: "zzzz" },
+    { id: 2, comment: "zssz" },
+    { id: 3, comment: "zzdasdz" },
+  ],
+};
+
 const accessToken = localStorage.getItem("Access_Token");
 const refreshToken = localStorage.getItem("Refresh_Token");
 
