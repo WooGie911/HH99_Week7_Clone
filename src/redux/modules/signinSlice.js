@@ -1,6 +1,11 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
+const initialState = {
+  post: [{}],
+  comment: [],
+};
+
 export const __Login = createAsyncThunk(
   "signin/__Login",
   async (payload, thunkAPI) => {
