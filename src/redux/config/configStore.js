@@ -1,12 +1,9 @@
-import post from "../modules/postSlice";
-import comment from "../modules/commentSlice";
-import signup from "../modules/signupSlice";
-import signin from "../modules/signinSlice";
+import signupSlice from "../modules/signupSlice";
 
 import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
 
 const store = configureStore({
-  reducer: { post: post, comment: comment, signup: signup, signin: signin },
+  reducer: { signupSlice },
   middleware: getDefaultMiddleware({
     serializableCheck: false,
   }),
