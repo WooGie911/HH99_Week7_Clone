@@ -4,21 +4,19 @@ import { __Login } from "../redux/modules/signinSlice";
 import { useNavigate } from "react-router-dom";
 import Button from "../components/elements/Button";
 import styled from "styled-components";
+import useInput from "../hooks/useInput";
 
 const SignIn = () => {
   const initialState = {
     username: "",
     password: "",
   };
-  const [input, setInput] = useState(initialState);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const ChangeInputHandler = (e) => {
-    const { name, value } = e.target;
-    setInput({ ...input, [name]: value });
-    console.log(input);
-  };
+  //커스텀훅 useInput 사용
+  const [input, setInput, ChangeInputHandler] = useInput(initialState);
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
