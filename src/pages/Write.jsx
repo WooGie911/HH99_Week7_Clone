@@ -35,7 +35,7 @@ const Write = () => {
       return alert("내용을 입력해 주세요");
     }
     const formData = new FormData();
-    formData.append("file", imgFile);
+    // formData.append("file", imgFile);
     formData.append("content", input.content);
     dispatch(__addPost(formData));
     for (var pair of formData.entries()) {

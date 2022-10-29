@@ -18,7 +18,7 @@ export const __addComment = createAsyncThunk(
       //console.log(payload)
       // payload를 데이터를 넣어줄때까지 실행하지 하지않겠다. //비동기
       const data = await axios.post(
-        `http://44.203.190.144/api/comment/${payload.id}`,
+        `http://13.124.38.31/api/comment/${payload.id}`,
         JSON.stringify(payload.comment),
         {
           headers: {
@@ -44,7 +44,7 @@ export const __deleteComment = createAsyncThunk(
       console.log(payload);
       // payload를 데이터를 넣어줄때까지 실행하지 하지않겠다. //비동기
       const data = await axios.delete(
-        `http://44.203.190.144/api/comment/${payload}`,
+        `http://13.124.38.31/api/comment/${payload}`,
         {
           headers: {
             enctype: "multipart/form-data",
@@ -69,7 +69,7 @@ export const __editComment = createAsyncThunk(
     try {
       console.log(payload);
       const data = await axios.put(
-        `http://44.203.190.144/api/comment/${payload.id}`,
+        `http://13.124.38.31/api/comment/${payload.id}`,
         JSON.stringify(payload.comment),
         {
           headers: {
