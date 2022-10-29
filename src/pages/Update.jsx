@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Button from "../components/elements/Button";
 import Input from "../components/elements/Input";
 import { __editPost, __deletePost } from "../redux/modules/postSlice";
+import useInput from "../hooks/useInput";
 
 const Update = () => {
   const navigate = useNavigate();
@@ -17,12 +18,9 @@ const Update = () => {
     }
     return false;
   });
-  const [input, setInput] = useState(posts[indexId]);
 
-  const onChangeHandlerInput = (e) => {
-    const { name, value } = e.target;
-    setInput({ ...input, [name]: value });
-  };
+  //커스텀훅 useInput 사용
+  const [input, setInput, onChangeHandlerInput] = useInput(posts[indexId]);
 
   const onClickUdapte = (data) => {
     const formData = new FormData();

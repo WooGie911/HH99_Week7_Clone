@@ -7,13 +7,17 @@ import Input from "../components/elements/Input";
 import Header from "../components/Header";
 import Layout from "../components/Layout";
 import AddImage from "../components/elements/addImage.svg";
+import useInput from "../hooks/useInput";
 
 const Write = () => {
   const dispatch = useDispatch();
-  const [input, setInput] = useState("");
+
   const [imageUrl, setImageUrl] = useState(null);
   const [imgFile, setImgFile] = useState("");
   const imgRef = useRef();
+
+  //커스텀훅 useInput 사용
+  const [input, setInput, onChangeHandlerInput] = useInput("");
 
   const onChangeImage = () => {
     const reader = new FileReader();
@@ -23,11 +27,6 @@ const Write = () => {
       setImageUrl(reader.result);
       setImgFile(file);
     };
-  };
-
-  const onChangeHandlerInput = (e) => {
-    const { name, value } = e.target;
-    setInput({ ...input, [name]: value });
   };
 
   const onSubmit = (e) => {

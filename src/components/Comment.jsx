@@ -4,13 +4,15 @@ import Button from "./elements/Button";
 import Input from "./elements/Input";
 import { useParams } from "react-router-dom";
 import { __addComment } from "../redux/modules/commentSlice";
+import useInput from "../hooks/useInput";
 
 const Comment = () => {
   const dispatch = useDispatch();
   const paramsid = useParams();
-  const [comments, setComments] = useState({
-    comment: "",
-  });
+  const initialState = { comment: "" };
+
+  //커스텀훅 useInput 사용
+  const [comments, setComments, onChangeInputHandler] = useInput(initialState);
 
   const onClickAddButton = (e) => {
     e.preventDefault();
@@ -23,11 +25,6 @@ const Comment = () => {
       name: "",
       comment: "",
     });
-  };
-
-  const onChangeInputHandler = (e) => {
-    const { name, value } = e.target;
-    setComments({ ...comments, [name]: value });
   };
 
   return (
