@@ -1,7 +1,8 @@
-import React, { useState }  from "react";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { __Login } from "../redux/modules/signinSlice";
 import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
 
 
 
@@ -10,8 +11,8 @@ import { useNavigate } from "react-router-dom";
 const SignIn = () => {
 
   const initialState = {
-    username: "",
-    password: "",
+    memberEmail: "",
+    memberPw: "",
   };
   const [input, setInput] = useState(initialState);
   const dispatch = useDispatch();
@@ -22,49 +23,84 @@ const SignIn = () => {
     setInput({ ...input, [name]: value });
     console.log(input);
   };
-  const getRandom = () => Math.random();
-  const inputId = getRandom();
+
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
 
     dispatch(__Login(input));
-    setInput(input);
+    setInput(initialState);
     console.log(input)
   };
 
 
 
   return (
-  <div>
-    <input
-     type="text"
-     name="username"
-     onChange={ChangeInputHandler}
-     placeholder="ID"
-     value={input.username}
-     />
-    <input
-     type="text"
-     name="password"
-     onChange={ChangeInputHandler}
-     placeholder="PASSWORD"
-     value={input.username}
-     />
-    <button
-    type="submit"
-    onClick={onSubmitHandler}>
-      로그인
-    </button>
-    <button
-     onClick={() => {
-      navigate("/SignUp");
-    }}
-    >
-      회원가입
-    </button>
-  </div>
+// {/* <div>
+//   <div>
+//     <h1></h1>
+//     <form>
+//       <p>
+        
+//       </p>
+//     </form>
+//   </div>
+// </div>
+       
+//             <label>아이디</label> */}
+            <div>
+              <form>
+              <input
+              type="text"
+              name="memberEmail"
+              onChange={ChangeInputHandler}
+              placeholder="ID"
+              value={input.memberEmail}
+            />
+            <input
+              type="text"
+              name="memberPw"
+              onChange={ChangeInputHandler}
+              placeholder="PASSWORD"
+              value={input.memberPw}
+            />
+            <button
+              type="submit"
+              onClick={onSubmitHandler}>
+              로그인
+            </button>
+            <button
+              onClick={() => {
+                navigate("/SignUp");
+              }}
+            >
+              회원가입
+            </button>
+       
+              </form>
+            </div>
+         
+            
+
+       
+
+     
+
+
+
+
+
+
+
+
+
   )
 };
 
 export default SignIn;
+
+
+
+
+
+

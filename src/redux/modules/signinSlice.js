@@ -13,14 +13,14 @@ export const __Login = createAsyncThunk(
     try {
       console.log(payload);
       const data = await axios.post(
-        `${process.env.REACT_APP_SERVER}/auth/login`,
+        `http://44.203.190.144/auth/login`,
         payload
       );
-
+        console.log(data)
       if (data.status === 200 || data.status === 201) {
-        window.localStorage.setItem("Access_Token", data.data.accessToken);
-        window.localStorage.setItem("Refresh_Token", data.data.refreshToken);
-        window.localStorage.setItem("nickname", data.data.nickname);
+        window.localStorage.setItem("Access_Token", data.headers.authorization);
+        window.localStorage.setItem("Refresh_Token", data.headers.refresh
+        );
         // setCookie("Access_Token", Access_Token);
         // setCookie("Refresh_Token", Refresh_Token);
         // setCookie("nickname", data.data.data);
@@ -28,7 +28,7 @@ export const __Login = createAsyncThunk(
         // console.log(accessToken);
         // console.log(refreshToken);
         // console.log(data.data.nickname);
-        window.location.replace("/Main");
+        // window.location.replace("/Main");
       }
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {

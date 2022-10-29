@@ -1,7 +1,11 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
-
+const initialState = {
+  signin: [{}],
+  comment: [],
+  
+};
 //빈배열이지만 배열/객체/스트링 오류해결용
 export const __SignUp = createAsyncThunk(
   "signup/__SignUp",
@@ -9,7 +13,7 @@ export const __SignUp = createAsyncThunk(
     try {
       console.log(payload);
       await axios
-        .post("http://localhost:3000/SignUp", payload)
+        .post("http://44.203.190.144/auth/signup", payload)
 
         .then((response) => {
           console.log(response);

@@ -14,11 +14,10 @@ const SignUp = () => {
   const navigate = useNavigate();
   const initialstate = 
   {
-    email:"",
-    username:"",
-    nickname:"",
-    pwdcheck1:"",
-    pwdcheck2:"",
+    memberEmail:"",
+    memberName:"",
+    pwCheck:"",
+    memberPw:"",
   };
   const [input,setInput] = useState(initialstate);
   const userdata = useSelector((state) => state.insta);
@@ -36,11 +35,10 @@ const SignUp = () => {
   const SubmitHandler = (e) =>{
     e.preventDefault();
     if(
-      input.nickname === "" ||
-      input.username === "" ||
-      input.nickname ==="" ||
-      input.pwdcheck1 === "" ||
-      input.pwdcheck2 === ""
+      input.memberEmail === "" ||
+      input.memberName === "" ||
+      input.memberPw === "" ||
+      input.pwCheck === ""
       
     ){
       return alert("입력을 확인하세요");
@@ -71,37 +69,30 @@ const SignUp = () => {
       <StForm >
           <input 
           type="text"
-          name="email"
-          value={input.email}
+          name="memberEmail"
+          value={input.memberEmail}
           onChange={changeInputHandler}
           placeholder="아이디"
 
           />
          <input
          type="text"
-         name="username"
-         value={input.username}
+         name="memberName"
+         value={input.memberName}
          onChange={changeInputHandler}
          placeholder="이름"
          />
          <input
          type="text"
-         name="nickname"
-         value={input.nickname}
-         onChange={changeInputHandler}
-         placeholder="닉네임"
-         />
-         <input
-         type="text"
-         name="pwdcheck1"
-         value={input.pwdcheck1}
+         name="memberPw"
+         value={input.memberPw}
          onChange={changeInputHandler}
          placeholder="비밀번호"
          />
           <input
          type="text"
-         name="pwdcheck2"
-         value={input.pwdcheck2}
+         name="pwCheck"
+         value={input.pwCheck}
          onChange={changeInputHandler}
          placeholder="비밀번호확인"
          />
