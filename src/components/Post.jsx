@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Button from "./elements/Button";
 import { useDispatch, useSelector } from "react-redux";
-import { __deletePost } from "../redux/modules/postSlice";
+import { __deletePost, __hartPost } from "../redux/modules/postSlice";
+import CommentList from "../components/CommentList";
 
 const Post = () => {
   const navigate = useNavigate();
@@ -22,6 +23,10 @@ const Post = () => {
     dispatch(__deletePost(payload));
   };
 
+  const onHartButton = (payload) => {
+    dispatch(__hartPost(payload));
+  };
+
   return (
     <>
       <img
@@ -32,23 +37,42 @@ const Post = () => {
           height: "400px",
         }}
       />
+
+      <div>
+        <div>프로필 이미지</div>
+        <div>{input.name}</div>
+
+        <Button
+          onClick={() => {
+            navigate("/Update");
+          }}
+        >
+          수정하기
+        </Button>
+        <Button
+          onClick={() => {
+            onPostDelete(input.postId);
+            navigate("/Main");
+          }}
+        >
+          삭제하기
+        </Button>
+      </div>
+
+      <div>프로필 이미지</div>
       <div>{input.name}</div>
       <div>{input.content}</div>
-      <Button
-        onClick={() => {
-          navigate("/Update");
-        }}
-      >
-        수정하기
-      </Button>
-      <Button
-        onClick={() => {
-          onPostDelete(input.postId);
-          navigate("/Main");
-        }}
-      >
-        삭제하기
-      </Button>
+
+      <CommentList />
+
+      <div>
+        <button onClick={() => onHartButton(input.postId)}>하트</button>
+        <button>댓글</button>
+        <button>공유</button>
+        <button>찜 우측정렬</button>
+      </div>
+      <div>좋아요 {input.likeSize}개</div>
+      <div>{input.createdAt}</div>
     </>
   );
 };

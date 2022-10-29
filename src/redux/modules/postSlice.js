@@ -9,11 +9,31 @@ const accessToken = localStorage.getItem("Access_Token");
 const refreshToken = localStorage.getItem("Refresh_Token");
 console.log(accessToken);
 console.log(refreshToken);
+
+export const __hartPost = createAsyncThunk(
+  "post/__hartPost",
+  async (payload, thunkAPI) => {
+    try {
+      const data = await axios.get(`http://13.124.38.31/api/likes/${payload}`, {
+        headers: {
+          "Content-Type": `application/json`,
+          Authorization: `Bearer ${accessToken}`,
+          RefreshToken: refreshToken,
+          "Cache-Control": "no-cache",
+        },
+      });
+      return thunkAPI.fulfillWithValue(data.data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 export const __getPost = createAsyncThunk(
   "post/__getPost",
   async (payload, thunkAPI) => {
     try {
-      const data = await axios.get(`http://44.203.190.144/api/post/all`);
+      const data = await axios.get(`http://13.124.38.31/api/post/all`);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -25,7 +45,7 @@ export const __getPostDetail = createAsyncThunk(
   "post/__getPostDetail",
   async (payload, thunkAPI) => {
     try {
-      const data = await axios.get(`http://44.203.190.144/api/post/${payload}`);
+      const data = await axios.get(`http://13.124.38.31/api/post/${payload}`);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -38,7 +58,7 @@ export const __addPost = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       await axios
-        .post(`http://44.203.190.144/api/post`, payload, {
+        .post(`http://13.124.38.31/api/post`, payload, {
           headers: {
             enctype: "multipart/form-data",
             Authorization: `Bearer ${accessToken}`,
@@ -61,7 +81,7 @@ export const __deletePost = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const data = await axios.delete(
-        `http://44.203.190.144/api/post/${payload}`,
+        `http://13.124.38.31/api/post/${payload}`,
         {
           headers: {
             enctype: "multipart/form-data",
@@ -85,7 +105,7 @@ export const __editPost = createAsyncThunk(
     try {
       const data = await axios.put(
         `
-        http://44.203.190.144/api/post/${payload.postId}
+        http://13.124.38.31/api/post/${payload.postId}
         `,
         payload.formData,
         {
@@ -111,6 +131,17 @@ const postSlice = createSlice({
 
   reducers: {},
   extraReducers: {
+    //__hartPost
+    [__hartPost.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [__hartPost.fulfilled]: (state, action) => {
+      state.isLoading = false;
+    },
+    [__hartPost.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
     //__getPost
     [__getPost.pending]: (state) => {
       state.isLoading = true;

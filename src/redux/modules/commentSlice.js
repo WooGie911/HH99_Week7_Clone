@@ -9,6 +9,27 @@ const accessToken = localStorage.getItem("Access_Token");
 const refreshToken = localStorage.getItem("Refresh_Token");
 
 //comment 부분
+export const __hartComment = createAsyncThunk(
+  "post/__hartComment",
+  async (payload, thunkAPI) => {
+    try {
+      const data = await axios.get(
+        `http://13.124.38.31/api/comment/likes/${payload}`,
+        {
+          headers: {
+            "Content-Type": `application/json`,
+            Authorization: `Bearer ${accessToken}`,
+            RefreshToken: refreshToken,
+            "Cache-Control": "no-cache",
+          },
+        }
+      );
+      return thunkAPI.fulfillWithValue(data.data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
 
 export const __addComment = createAsyncThunk(
   "comment/__addComment",
@@ -18,7 +39,7 @@ export const __addComment = createAsyncThunk(
       //console.log(payload)
       // payload를 데이터를 넣어줄때까지 실행하지 하지않겠다. //비동기
       const data = await axios.post(
-        `http://44.203.190.144/api/comment/${payload.id}`,
+        `http://13.124.38.31/api/comment/${payload.id}`,
         JSON.stringify(payload.comment),
         {
           headers: {
@@ -44,7 +65,7 @@ export const __deleteComment = createAsyncThunk(
       console.log(payload);
       // payload를 데이터를 넣어줄때까지 실행하지 하지않겠다. //비동기
       const data = await axios.delete(
-        `http://44.203.190.144/api/comment/${payload}`,
+        `http://13.124.38.31/api/comment/${payload}`,
         {
           headers: {
             enctype: "multipart/form-data",
@@ -69,7 +90,7 @@ export const __editComment = createAsyncThunk(
     try {
       console.log(payload);
       const data = await axios.put(
-        `http://44.203.190.144/api/comment/${payload.id}`,
+        `http://13.124.38.31/api/comment/${payload.id}`,
         JSON.stringify(payload.comment),
         {
           headers: {
@@ -95,6 +116,17 @@ const commentSlice = createSlice({
   extraReducers: {
     //comment 부분
 
+    //__hartComment
+    [__hartComment.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [__hartComment.fulfilled]: (state, action) => {
+      state.isLoading = false;
+    },
+    [__hartComment.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
     //__addComment
     [__addComment.pending]: (state) => {
       state.isLoading = true;

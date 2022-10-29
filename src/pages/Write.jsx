@@ -35,7 +35,7 @@ const Write = () => {
       return alert("내용을 입력해 주세요");
     }
     const formData = new FormData();
-    formData.append("file", imgFile);
+    formData.append("imageFile", imgFile);
     formData.append("content", input.content);
     dispatch(__addPost(formData));
     for (var pair of formData.entries()) {
@@ -49,7 +49,7 @@ const Write = () => {
     <>
       <Layout>
         <Header />
-        <div>Write</div>
+
         <label htmlFor="imgFile">
           <img
             src={imageUrl ? imageUrl : AddImage}
@@ -72,7 +72,6 @@ const Write = () => {
         </label>
         <Button onClick={onSubmit}> 공유하기</Button>
 
-        <label> 내용 </label>
         <Input
           size="textarea"
           placeholder="내용을 입력해주세요"

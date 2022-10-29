@@ -12,7 +12,7 @@ export const __SignUp = createAsyncThunk(
     try {
       console.log(payload);
       const data = await axios
-        .post(`http://44.203.190.144/auth/signup`, payload)
+        .post(`http://13.124.38.31/auth/signup`, payload)
         // .post(`${process.env.REACT_APP_SERVER}/auth/signup`, payload)
 
         .then((response) => {

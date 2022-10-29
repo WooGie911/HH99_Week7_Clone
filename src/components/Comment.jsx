@@ -29,16 +29,15 @@ const Comment = () => {
 
   return (
     <>
-      <button>하트</button>
       <Input
-        placeholder="댓글을 입력하세요"
+        placeholder="댓글 달기..."
         value={comments.comment || ""}
         name="comment"
         type="text"
         onChange={onChangeInputHandler}
       />
-      <Button size="large" color="reverse" onClick={onClickAddButton}>
-        추가하기
+      <Button size="small" color="reverse" onClick={onClickAddButton}>
+        게시
       </Button>
     </>
   );
