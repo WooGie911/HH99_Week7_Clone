@@ -2,45 +2,13 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const initialState = {
-  post: [
-    {
-      id: 1,
-      username: "kim",
-      content: "ㅡㅡ",
-      comment: [
-        { id: 1, comment: "zzzz" },
-        { id: 2, comment: "zssz" },
-        { id: 3, comment: "zzdasdz" },
-      ],
-    },
-    { id: 2, username: "lee", content: "ㅋㅋㅋㅋ" },
-    { id: 3, username: "park", content: "ㅠㅠ" },
-  ],
-  comment: [
-    { id: 1, comment: "zzzz" },
-    { id: 2, comment: "zssz" },
-    { id: 3, comment: "zzdasdz" },
-  ],
+  post: [],
 };
 
 const accessToken = localStorage.getItem("Access_Token");
 const refreshToken = localStorage.getItem("Refresh_Token");
 
 //comment 부분
-export const __getComment = createAsyncThunk(
-  "comment/__getComment",
-  async (payload, thunkAPI) => {
-    try {
-      console.log(payload);
-      const data = await axios.get(
-        `${process.env.REACT_APP_SERVER}/api/comments/${payload}`
-      );
-      return thunkAPI.fulfillWithValue(data.data);
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error);
-    }
-  }
-);
 
 export const __addComment = createAsyncThunk(
   "comment/__addComment",
@@ -50,7 +18,7 @@ export const __addComment = createAsyncThunk(
       //console.log(payload)
       // payload를 데이터를 넣어줄때까지 실행하지 하지않겠다. //비동기
       const data = await axios.post(
-        `${process.env.REACT_APP_SERVER}/api/comment/${payload.id}`,
+        `http://44.203.190.144/api/comment/${payload.id}`,
         JSON.stringify(payload.comment),
         {
           headers: {
@@ -76,7 +44,7 @@ export const __deleteComment = createAsyncThunk(
       console.log(payload);
       // payload를 데이터를 넣어줄때까지 실행하지 하지않겠다. //비동기
       const data = await axios.delete(
-        `${process.env.REACT_APP_SERVER}/api/comment/${payload}`,
+        `http://44.203.190.144/api/comment/${payload}`,
         {
           headers: {
             enctype: "multipart/form-data",
@@ -101,7 +69,7 @@ export const __editComment = createAsyncThunk(
     try {
       console.log(payload);
       const data = await axios.put(
-        `${process.env.REACT_APP_SERVER}/api/comment/${payload.id}`,
+        `http://44.203.190.144/api/comment/${payload.id}`,
         JSON.stringify(payload.comment),
         {
           headers: {
@@ -126,18 +94,7 @@ const commentSlice = createSlice({
   reducers: {},
   extraReducers: {
     //comment 부분
-    //__getComment
-    [__getComment.pending]: (state) => {
-      state.isLoading = true;
-    },
-    [__getComment.fulfilled]: (state, action) => {
-      state.isLoading = false;
-      state.comment = action.payload;
-    },
-    [__getComment.rejected]: (state, action) => {
-      state.isLoading = false;
-      state.error = action.payload;
-    },
+
     //__addComment
     [__addComment.pending]: (state) => {
       state.isLoading = true;
@@ -157,7 +114,7 @@ const commentSlice = createSlice({
     [__deleteComment.fulfilled]: (state, action) => {
       state.isLoading = false;
       state.comment = state.comment.filter(
-        (comment) => comment.id !== action.payload
+        (comment) => comment.commentId !== action.payload
       );
     },
     [__deleteComment.rejected]: (state, action) => {
@@ -172,7 +129,7 @@ const commentSlice = createSlice({
       state.isLoading = false;
 
       const indexId = state.comment.findIndex((comment) => {
-        if (comment.id == action.payload.id) {
+        if (comment.commentId == action.payload.id) {
           return true;
         }
         return false;

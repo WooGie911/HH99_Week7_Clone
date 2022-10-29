@@ -29,6 +29,7 @@ const Comment = () => {
 
   return (
     <>
+      <button>하트</button>
       <Input
         placeholder="댓글을 입력하세요"
         value={comments.comment || ""}

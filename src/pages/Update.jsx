@@ -13,7 +13,7 @@ const Update = () => {
   const posts = useSelector((state) => state.post.post);
 
   const indexId = posts.findIndex((user) => {
-    if (user.id == paramsid.id) {
+    if (user.postId == paramsid.id) {
       return true;
     }
     return false;
@@ -25,7 +25,7 @@ const Update = () => {
   const onClickUdapte = (data) => {
     const formData = new FormData();
     formData.append("content", data.content);
-    const Fdata = { id: input.id, formData: formData };
+    const Fdata = { postId: input.postId, formData: formData };
     dispatch(__editPost(Fdata));
   };
 

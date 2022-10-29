@@ -11,13 +11,15 @@ export const __SignUp = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       console.log(payload);
-      await axios
-        .post(`${process.env.REACT_APP_SERVER}/auth/signup`, payload)
+      const data = await axios
+        .post(`http://44.203.190.144/auth/signup`, payload)
+        // .post(`${process.env.REACT_APP_SERVER}/auth/signup`, payload)
 
         .then((response) => {
           console.log(response);
           return thunkAPI.fulfillWithValue(response.data);
         });
+      console.log(data.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }

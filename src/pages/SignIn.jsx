@@ -8,8 +8,8 @@ import useInput from "../hooks/useInput";
 
 const SignIn = () => {
   const initialState = {
-    username: "",
-    password: "",
+    memberEmail: "",
+    memberPw: "",
   };
 
   const dispatch = useDispatch();
@@ -20,7 +20,7 @@ const SignIn = () => {
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
-    if (input.email === "" || input.password === "") {
+    if (input.memberEmail === "" || input.memberPw === "") {
       return alert("입력을 확인하세요.");
     }
     dispatch(__Login(input));
@@ -34,17 +34,17 @@ const SignIn = () => {
           <StForm>
             <input
               type="text"
-              name="username"
+              name="memberEmail"
               onChange={ChangeInputHandler}
               placeholder="ID"
-              value={input.username}
+              value={input.memberEmail}
             />
             <input
               type="text"
-              name="password"
+              name="memberPw"
               onChange={ChangeInputHandler}
               placeholder="PASSWORD"
-              value={input.password}
+              value={input.memberPw}
             />
             <Button onClick={onSubmitHandler} size="medium" color="reverse">
               로그인

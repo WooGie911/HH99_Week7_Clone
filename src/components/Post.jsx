@@ -11,7 +11,7 @@ const Post = () => {
   const posts = useSelector((state) => state.post.post);
 
   const indexId = posts.findIndex((user) => {
-    if (user.id == paramsid.id) {
+    if (user.postId == paramsid.id) {
       return true;
     }
     return false;
@@ -25,14 +25,14 @@ const Post = () => {
   return (
     <>
       <img
-        src={input.image}
+        src={input.img}
         style={{
           marginBottom: "24px",
           width: "400px",
           height: "400px",
         }}
       />
-      <div>{input.userName}</div>
+      <div>{input.name}</div>
       <div>{input.content}</div>
       <Button
         onClick={() => {
@@ -43,7 +43,7 @@ const Post = () => {
       </Button>
       <Button
         onClick={() => {
-          onPostDelete(input.id);
+          onPostDelete(input.postId);
           navigate("/Main");
         }}
       >

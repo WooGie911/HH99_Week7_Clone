@@ -1,11 +1,8 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  __getComment,
-  __addComment,
-  __deleteComment,
-} from "../redux/modules/commentSlice";
+import { __addComment, __deleteComment } from "../redux/modules/commentSlice";
 import { useParams } from "react-router-dom";
+import { __getPost } from "../redux/modules/postSlice";
 
 const CommentList = () => {
   const dispatch = useDispatch();
@@ -17,7 +14,7 @@ const CommentList = () => {
   };
 
   useEffect(() => {
-    dispatch(__getComment(paramsid.id));
+    dispatch(__getPost(paramsid.id));
   }, [dispatch]);
 
   return (
@@ -25,10 +22,10 @@ const CommentList = () => {
       <div>
         {commentList.map((comment) => {
           return (
-            <div key={comment.id}>
+            <div key={comment.commentId}>
               <div>
                 {comment.username} :{comment.comment}
-                <button onClick={() => onDeleteButton(comment.id)}>
+                <button onClick={() => onDeleteButton(comment.commentId)}>
                   삭제하기
                 </button>
               </div>

@@ -11,10 +11,10 @@ const SignUp = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const initialstate = {
-    email: "",
-    username: "",
-    password: "",
-    password2: "",
+    memberEmail: "",
+    memberName: "",
+    memberPw: "",
+    pwCheck: "",
   };
 
   //커스텀훅 useInput 사용
@@ -23,16 +23,16 @@ const SignUp = () => {
   const SubmitHandler = (e) => {
     e.preventDefault();
     if (
-      input.email === "" ||
-      input.username === "" ||
-      input.password === "" ||
-      input.password2 === ""
+      input.memberEmail === "" ||
+      input.memberName === "" ||
+      input.memberPw === "" ||
+      input.pwCheck === ""
     ) {
       return alert("입력을 확인하세요.");
     }
-    if (input.password === input.password2) {
-      return alert("비밀번호가 일치하지 않습니다.");
-    }
+    // if ({input.password} === {input.password2}) {
+    //   return alert("비밀번호가 일치하지 않습니다.");
+    // }
     dispatch(__SignUp(input));
     setInput(initialstate);
     navigate("/");
@@ -44,30 +44,30 @@ const SignUp = () => {
         <StForm>
           <input
             type="text"
-            name="email"
-            value={input.email}
+            name="memberEmail"
+            value={input.memberEmail}
             onChange={changeInputHandler}
             placeholder="ID"
           />
           <input
             type="text"
-            name="username"
-            value={input.username}
+            name="memberName"
+            value={input.memberName}
             onChange={changeInputHandler}
             placeholder="사용자 이름"
           />
 
           <input
             type="text"
-            name="password"
-            value={input.password}
+            name="memberPw"
+            value={input.memberPw}
             onChange={changeInputHandler}
             placeholder="비밀번호"
           />
           <input
             type="text"
-            name="password2"
-            value={input.password2}
+            name="pwCheck"
+            value={input.pwCheck}
             onChange={changeInputHandler}
             placeholder="비밀번호확인"
           />

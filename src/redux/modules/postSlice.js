@@ -2,37 +2,30 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const initialState = {
-  post: [
-    {
-      id: 1,
-      username: "kim",
-      content: "ㅡㅡ",
-      comment: [
-        { id: 1, comment: "zzzz" },
-        { id: 2, comment: "zssz" },
-        { id: 3, comment: "zzdasdz" },
-      ],
-    },
-    { id: 2, username: "lee", content: "ㅋㅋㅋㅋ" },
-    { id: 3, username: "park", content: "ㅠㅠ" },
-  ],
-  comment: [
-    { id: 1, comment: "zzzz" },
-    { id: 2, comment: "zssz" },
-    { id: 3, comment: "zzdasdz" },
-  ],
+  post: [],
 };
 
 const accessToken = localStorage.getItem("Access_Token");
 const refreshToken = localStorage.getItem("Refresh_Token");
-
+console.log(accessToken);
+console.log(refreshToken);
 export const __getPost = createAsyncThunk(
   "post/__getPost",
   async (payload, thunkAPI) => {
     try {
-      const data = await axios.get(
-        `${process.env.REACT_APP_SERVER}/api/articles`
-      );
+      const data = await axios.get(`http://44.203.190.144/api/post/all`);
+      return thunkAPI.fulfillWithValue(data.data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+export const __getPostDetail = createAsyncThunk(
+  "post/__getPostDetail",
+  async (payload, thunkAPI) => {
+    try {
+      const data = await axios.get(`http://44.203.190.144/api/post/${payload}`);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -45,7 +38,7 @@ export const __addPost = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       await axios
-        .post(`${process.env.REACT_APP_SERVER}/api/article`, payload, {
+        .post(`http://44.203.190.144/api/post`, payload, {
           headers: {
             enctype: "multipart/form-data",
             Authorization: `Bearer ${accessToken}`,
@@ -68,7 +61,7 @@ export const __deletePost = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const data = await axios.delete(
-        `${process.env.REACT_APP_SERVER}/api/article/${payload}`,
+        `http://44.203.190.144/api/post/${payload}`,
         {
           headers: {
             enctype: "multipart/form-data",
@@ -91,7 +84,9 @@ export const __editPost = createAsyncThunk(
     console.log("payload", payload);
     try {
       const data = await axios.put(
-        `${process.env.REACT_APP_SERVER}/api/article/${payload.id}`,
+        `
+        http://44.203.190.144/api/post/${payload.postId}
+        `,
         payload.formData,
         {
           headers: {
@@ -128,6 +123,27 @@ const postSlice = createSlice({
       state.isLoading = false;
       state.error = action.payload;
     },
+    //__getPostDetail
+    [__getPostDetail.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [__getPostDetail.fulfilled]: (state, action) => {
+      state.isLoading = false;
+
+      const indexId = state.post.findIndex((post) => {
+        if (post.postId == action.payload.postId) {
+          return true;
+        }
+        return false;
+      });
+      state.post[indexId] = action.payload;
+
+      state.post = [...state.post];
+    },
+    [__getPostDetail.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
     //__addPost
     [__addPost.pending]: (state) => {
       state.isLoading = true;
@@ -147,7 +163,7 @@ const postSlice = createSlice({
     },
     [__deletePost.fulfilled]: (state, action) => {
       state.isLoading = false;
-      state.post = state.post.filter((post) => post.id !== action.payload);
+      state.post = state.post.filter((post) => post.postId !== action.payload);
     },
 
     [__deletePost.rejected]: (state, action) => {
@@ -162,7 +178,7 @@ const postSlice = createSlice({
       state.isLoading = false;
 
       const indexId = state.post.findIndex((post) => {
-        if (post.id == action.payload.id) {
+        if (post.postId == action.payload.postId) {
           return true;
         }
         return false;

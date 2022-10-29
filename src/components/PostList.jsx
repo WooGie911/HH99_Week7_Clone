@@ -23,12 +23,12 @@ const PostList = () => {
             <Button
               key={index}
               onClick={() => {
-                navigate(`/Detail/${post.id}`);
+                navigate(`/Detail/${post.postId}`);
               }}
             >
               <div>
                 <img
-                  src={post.image}
+                  src={post.img}
                   style={{
                     marginTop: "-20px",
                     width: "250px",
