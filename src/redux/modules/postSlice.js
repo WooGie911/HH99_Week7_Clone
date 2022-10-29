@@ -16,12 +16,15 @@ export const __getPost = createAsyncThunk(
     try {
       const data = await axios.get(`http://13.124.38.31/api/post`, {
         headers: {
-          enctype: "multipart/form-data",
-          Authorization: `Bearer ${accessToken}`,
+          // enctype: "multipart/form-data",
+          "Content-Type": `application/json`,
+          // Authorization: ` ${accessToken}`,
+          Authorization: accessToken,
           RefreshToken: refreshToken,
           "Cache-Control": "no-cache",
         },
       });
+      console.log(data);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -35,8 +38,9 @@ export const __getPostDetail = createAsyncThunk(
     try {
       const data = await axios.get(`http://13.124.38.31/api/post/${payload}`, {
         headers: {
-          enctype: "multipart/form-data",
-          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": `application/json`,
+          // Authorization: `Bearer ${accessToken}`,
+          Authorization: accessToken,
           RefreshToken: refreshToken,
           "Cache-Control": "no-cache",
         },
@@ -52,15 +56,24 @@ export const __addPost = createAsyncThunk(
   "post/__addPost",
   async (payload, thunkAPI) => {
     try {
+      console.log(payload);
+      console.log(accessToken);
+      console.log(refreshToken);
       await axios
-        .post(`http://13.124.38.31/api/post`, payload, {
-          headers: {
-            enctype: "multipart/form-data",
-            Authorization: `Bearer ${accessToken}`,
-            RefreshToken: refreshToken,
-            "Cache-Control": "no-cache",
-          },
-        })
+        .post(
+          `http://13.124.38.31/api/post`,
+          // JSON.stringify(payload),
+          payload,
+          {
+            headers: {
+              // enctype: "multipart/form-data",
+              "Content-Type": `application/json`,
+              Authorization: accessToken,
+              RefreshToken: refreshToken,
+              "Cache-Control": "no-cache",
+            },
+          }
+        )
         .then((response) => {
           console.log("response", response.data);
         });

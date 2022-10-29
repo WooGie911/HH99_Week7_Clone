@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { __addComment, __deleteComment } from "../redux/modules/commentSlice";
 import { useParams } from "react-router-dom";
-import { __getPost } from "../redux/modules/postSlice";
+import { __getPostDetail } from "../redux/modules/postSlice";
 
 const CommentList = () => {
   const dispatch = useDispatch();
@@ -14,7 +14,7 @@ const CommentList = () => {
   };
 
   useEffect(() => {
-    dispatch(__getPost(paramsid.id));
+    dispatch(__getPostDetail(paramsid.id));
   }, [dispatch]);
 
   return (

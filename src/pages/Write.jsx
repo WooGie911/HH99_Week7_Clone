@@ -36,13 +36,16 @@ const Write = () => {
     }
     const formData = new FormData();
     // formData.append("file", imgFile);
-    formData.append("content", input.content);
-    dispatch(__addPost(formData));
-    for (var pair of formData.entries()) {
-      console.log(pair[0] + ", " + pair[1]);
-    }
+    // formData.append("content", input.content);
+    // console.log(formData);
+    // dispatch(__addPost(formData));
+    // console.log({ content: input.content });
+    dispatch(__addPost({ contents: input.content }));
+    // for (var pair of formData.entries()) {
+    //   console.log(pair[0] + ", " + pair[1]);
+    // }
 
-    window.location.replace("/Main");
+    // window.location.replace("/write");
   };
 
   return (

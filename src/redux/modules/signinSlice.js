@@ -10,13 +10,13 @@ export const __Login = createAsyncThunk(
   "signin/__Login",
   async (payload, thunkAPI) => {
     try {
-      console.log(payload);
+      // console.log(payload);
       const data = await axios.post(
         `http://13.124.38.31/auth/login`,
         // `${process.env.REACT_APP_SERVER}/auth/login`,
         payload
       );
-
+      // console.log(data.headers.authorization);
       if (data.status === 200 || data.status === 201) {
         window.localStorage.setItem("Access_Token", data.headers.authorization);
         window.localStorage.setItem("Refresh_Token", data.headers.refresh);
@@ -27,7 +27,7 @@ export const __Login = createAsyncThunk(
         // console.log(accessToken);
         // console.log(refreshToken);
         // console.log(data.data.nickname);
-        window.location.replace("/Main");
+        window.location.replace("/Write");
       }
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
