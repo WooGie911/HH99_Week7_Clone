@@ -29,12 +29,14 @@ export const __Login = createAsyncThunk(
         // console.log(data.data.nickname);
         window.location.replace("/Main");
       }
+      console.log("response", data);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       if (error.data.status > 400 && error.data.status < 500) {
         // window.location.reload();
         alert("로그인 실패");
       }
+      console.log("error", error);
       return thunkAPI.rejectWithValue(error);
     }
   }

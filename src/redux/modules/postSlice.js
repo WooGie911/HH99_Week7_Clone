@@ -1,8 +1,10 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const initialState = {
   post: [],
+  // comment: [],
+  ModalDetail: false,
 };
 
 const accessToken = localStorage.getItem("Access_Token");
@@ -17,13 +19,15 @@ export const __hartPost = createAsyncThunk(
       const data = await axios.get(`http://13.124.38.31/api/likes/${payload}`, {
         headers: {
           "Content-Type": `application/json`,
-          Authorization: `Bearer ${accessToken}`,
+          Authorization: accessToken,
           RefreshToken: refreshToken,
           "Cache-Control": "no-cache",
         },
       });
+      console.log("response", data);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
+      console.log("error", error);
       return thunkAPI.rejectWithValue(error);
     }
   }
@@ -33,21 +37,19 @@ export const __getPost = createAsyncThunk(
   "post/__getPost",
   async (payload, thunkAPI) => {
     try {
-      const data = await axios.get(`http://13.124.38.31/api/post/all`);
-      return thunkAPI.fulfillWithValue(data.data);
+      const data = await axios.get(`http://13.124.38.31/api/post`, {
+        headers: {
+          "Content-Type": `application/json`,
+          Authorization: accessToken,
+          RefreshToken: refreshToken,
+          "Cache-Control": "no-cache",
+        },
+      });
+      // console.log("data", data);
+      console.log("__getPost", data);
+      return thunkAPI.fulfillWithValue(data.data.data);
     } catch (error) {
-      return thunkAPI.rejectWithValue(error);
-    }
-  }
-);
-
-export const __getPostDetail = createAsyncThunk(
-  "post/__getPostDetail",
-  async (payload, thunkAPI) => {
-    try {
-      const data = await axios.get(`http://13.124.38.31/api/post/${payload}`);
-      return thunkAPI.fulfillWithValue(data.data);
-    } catch (error) {
+      console.log("error", error);
       return thunkAPI.rejectWithValue(error);
     }
   }
@@ -58,16 +60,29 @@ export const __addPost = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       await axios
-        .post(`http://13.124.38.31/api/post`, payload, {
-          headers: {
-            enctype: "multipart/form-data",
-            Authorization: `Bearer ${accessToken}`,
-            RefreshToken: refreshToken,
-            "Cache-Control": "no-cache",
-          },
-        })
+        .post(
+          `http://13.124.38.31/api/post`,
+          payload,
+          // {
+          //   headers: {
+          //     "Content-Type": `application/json`,
+          //     Authorization: accessToken,
+          //     RefreshToken: refreshToken,
+          //     "Cache-Control": "no-cache",
+          //   },
+          // }
+          {
+            headers: {
+              enctype: "multipart/form-data",
+              Authorization: accessToken,
+              RefreshToken: refreshToken,
+              "Cache-Control": "no-cache",
+            },
+          }
+        )
         .then((response) => {
-          console.log("response", response.data);
+          console.log("response", response);
+          return thunkAPI.fulfillWithValue(response.data.data);
         });
     } catch (error) {
       console.log("error", error);
@@ -84,15 +99,17 @@ export const __deletePost = createAsyncThunk(
         `http://13.124.38.31/api/post/${payload}`,
         {
           headers: {
-            enctype: "multipart/form-data",
-            Authorization: `Bearer ${accessToken}`,
+            "Content-Type": `application/json`,
+            Authorization: accessToken,
             RefreshToken: refreshToken,
             "Cache-Control": "no-cache",
           },
         }
       );
+      console.log("response", data);
       return thunkAPI.fulfillWithValue(payload);
     } catch (error) {
+      console.log("error", error);
       return thunkAPI.rejectWithValue(error);
     }
   }
@@ -110,16 +127,18 @@ export const __editPost = createAsyncThunk(
         payload.formData,
         {
           headers: {
-            enctype: "multipart/form-data",
-            Authorization: `Bearer ${accessToken}`,
+            "Content-Type": `application/json`,
+            Authorization: accessToken,
             RefreshToken: refreshToken,
             "Cache-Control": "no-cache",
           },
         }
       );
-      console.log("data", data.data);
-      return thunkAPI.fulfillWithValue(data.data);
+      // console.log("data", data.data);
+      console.log("response", data);
+      return thunkAPI.fulfillWithValue(data.data.data);
     } catch (error) {
+      console.log("error", error);
       return thunkAPI.rejectWithValue(error);
     }
   }
@@ -129,7 +148,11 @@ const postSlice = createSlice({
   name: "post",
   initialState,
 
-  reducers: {},
+  reducers: {
+    _ModalDetail(state, action) {
+      state.ModalDetail = action.payload;
+    },
+  },
   extraReducers: {
     //__hartPost
     [__hartPost.pending]: (state) => {
@@ -154,34 +177,14 @@ const postSlice = createSlice({
       state.isLoading = false;
       state.error = action.payload;
     },
-    //__getPostDetail
-    [__getPostDetail.pending]: (state) => {
-      state.isLoading = true;
-    },
-    [__getPostDetail.fulfilled]: (state, action) => {
-      state.isLoading = false;
 
-      const indexId = state.post.findIndex((post) => {
-        if (post.postId == action.payload.postId) {
-          return true;
-        }
-        return false;
-      });
-      state.post[indexId] = action.payload;
-
-      state.post = [...state.post];
-    },
-    [__getPostDetail.rejected]: (state, action) => {
-      state.isLoading = false;
-      state.error = action.payload;
-    },
     //__addPost
     [__addPost.pending]: (state) => {
       state.isLoading = true;
     },
     [__addPost.fulfilled]: (state, action) => {
       state.isLoading = false;
-      state.post = action.payload;
+      state.post.push(action.payload);
     },
     [__addPost.rejected]: (state, action) => {
       state.isLoading = false;
@@ -225,4 +228,5 @@ const postSlice = createSlice({
   },
 });
 
+export const { _ModalDetail } = postSlice.actions;
 export default postSlice.reducer;

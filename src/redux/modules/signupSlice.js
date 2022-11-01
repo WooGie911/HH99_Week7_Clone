@@ -16,11 +16,12 @@ export const __SignUp = createAsyncThunk(
         // .post(`${process.env.REACT_APP_SERVER}/auth/signup`, payload)
 
         .then((response) => {
-          console.log(response);
+          console.log("response", response);
           return thunkAPI.fulfillWithValue(response.data);
         });
       console.log(data.data);
     } catch (error) {
+      console.log("error", error);
       return thunkAPI.rejectWithValue(error);
     }
   }
