@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { __getPostDetail, _P_ID } from "../redux/modules/commentSlice";
 import { _ModalDetail } from "../redux/modules/postSlice";
-import Post from "../components/Post";
+import Post from "./Post";
 
 const PostList = () => {
   const dispatch = useDispatch();

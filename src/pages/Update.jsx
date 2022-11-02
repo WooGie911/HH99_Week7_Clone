@@ -22,7 +22,7 @@ const Update = (props) => {
 
   const onClickUpdate = (data) => {
     const formData = new FormData();
-    formData.append("contents", data.content);
+    formData.append("content", data.content);
     const Fdata = { postId: data.postId, formData: formData };
     dispatch(__editPost(Fdata));
     // navigate(`/Detail/${paramsid.id}`);

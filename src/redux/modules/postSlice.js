@@ -125,7 +125,8 @@ export const __editPost = createAsyncThunk(
         payload.formData,
         {
           headers: {
-            "Content-Type": `application/json`,
+            // "Content-Type": `application/json`,
+            enctype: "multipart/form-data",
             Authorization: accessToken,
             RefreshToken: refreshToken,
             "Cache-Control": "no-cache",
