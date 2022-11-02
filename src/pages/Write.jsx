@@ -40,12 +40,8 @@ const Write = (props) => {
   };
   const onSubmit = (e) => {
     const data = new FormData();
-    //  for(let i = 0; i < files.length; i++){
-    //   data.append('files',files[i]);
-    //  }
-    //
     data.append("img", imgFile);
-    data.append("content", input.content); //백엔드가 받는
+    data.append("content", input.content);
     dispatch(__addPost(data));
     props.setModalWrite(false);
     window.location.replace("/Main");
@@ -59,9 +55,7 @@ const Write = (props) => {
               <StpostBox_1>
                 <StLabel>
                   <StFilename>
-                    {""}
                     <span>새 게시물 만들기</span>
-                    {""}
                   </StFilename>
                 </StLabel>
 
@@ -143,25 +137,6 @@ const StModalWriteBT = styled.button`
   position: relative;
   left: 5px;
 `;
-const StModalWriteBT2 = styled.button`
-  width: 600px;
-  height: 300px;
-`;
-
-const StImgsWrap = styled.div`
-  width: 1000px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  .preview {
-    text-align: center;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 10px;
-  }
-`;
 
 const StWrapper = styled.div`
   width: 100%;
@@ -196,9 +171,6 @@ const StpostBox_1 = styled.div`
   background-image: url(${insta_file});
   background-repeat: no-repeat;
   background-position: center;
-  // background-size: 10% 10%;
-  // background-size : cover;
-  // background: no-repeat;
   position: relative;
 `;
 
@@ -217,7 +189,6 @@ const StLabel2 = styled.div`
 `;
 
 const StImageBox = styled.input`
-  // margin-top: 200px;
   display: none;
 `;
 

@@ -8,6 +8,9 @@ import {
   P_id,
 } from "../redux/modules/commentSlice";
 import { _ModalDetail } from "../redux/modules/postSlice";
+import styled from "styled-components";
+import Userlogo from "./icons/프로필.PNG";
+import Likelogo from "./icons/하트.png";
 
 // import { __getPostDetail } from "../redux/modules/postSlice";
 
@@ -38,21 +41,20 @@ const CommentList = (props) => {
           commentList.map((comment, index) => {
             return (
               <div key={index}>
-                <div>프로필 이미지</div>
                 <div>
-                  {comment.username} : {comment.comment}
-                  <button onClick={() => onheartButton(comment.commentId)}>
-                    하트
-                  </button>
-                  <div>{comment.createdAt}</div>
-                  <div>좋아요 {comment.likeSize}개</div>
-                  {/* <button onClick={() => onDeleteButton(comment.commentId)}>
+                  <STUser src={Userlogo} />
+                  {comment.name} {comment.comment}
+                </div>
+                <LikeButton onClick={() => onheartButton(comment.commentId)}>
+                  {comment.amILike ? "❤️" : "🤍"}
+                </LikeButton>
+                {comment.createdAt} 좋아요 {comment.likeSize}개
+                {/* <button onClick={() => onDeleteButton(comment.commentId)}>
                   답글 달기
                 </button> */}
-                  <button onClick={() => onDeleteButton(comment.commentId)}>
-                    삭제하기
-                  </button>
-                </div>
+                <LikeButton onClick={() => onDeleteButton(comment.commentId)}>
+                  🗑
+                </LikeButton>
               </div>
             );
           })}
@@ -62,3 +64,36 @@ const CommentList = (props) => {
 };
 
 export default CommentList;
+
+const STUser = styled.img`
+  /* width: 100%; */
+  width: 30px;
+  height: 30px;
+  /* display: flex;
+  flex-direction: column; */
+  //border-bottom-right-radius: 10px;
+  //border-bottom-left-radius: 10px;
+
+  /* padding-top: 0px; */
+  /* margin-top: 100px; */
+  /* margin-bottom: 100px; */
+  /* margin: auto; */
+`;
+
+const LikeButton = styled.button`
+  /* width: 100%; */
+  width: 30px;
+  height: 30px;
+  border: 0 solid transparent;
+  background-color: transparent;
+  cursor: pointer;
+  /* display: flex;
+  flex-direction: column; */
+  //border-bottom-right-radius: 10px;
+  //border-bottom-left-radius: 10px;
+
+  /* padding-top: 0px; */
+  /* margin-top: 100px; */
+  /* margin-bottom: 100px; */
+  /* margin: auto; */
+`;

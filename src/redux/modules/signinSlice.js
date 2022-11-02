@@ -24,19 +24,22 @@ export const __Login = createAsyncThunk(
         // setCookie("Refresh_Token", Refresh_Token);
         // setCookie("nickname", data.data.data);
         alert("로그인 성공");
-        // console.log(accessToken);
-        // console.log(refreshToken);
-        // console.log(data.data.nickname);
         window.location.replace("/Main");
       }
-      console.log("response", data);
+      console.log("로그인 응답", data);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
-      if (error.data.status > 400 && error.data.status < 500) {
-        // window.location.reload();
+      console.log("로그인 에러", error.response.data.message);
+      if (error.response.status >= 400 && error.response.status < 500) {
         alert("로그인 실패");
       }
-      console.log("error", error);
+      if (error.response.status === 400) {
+        //비밀번호 오류
+        alert(`${error.response.data.field}가 ${error.response.data.message}`);
+      } else if (error.response.data.message !== undefined) {
+        //아이디 오류
+        alert(`${error.response.data.field} ${error.response.data.message}`);
+      }
       return thunkAPI.rejectWithValue(error);
     }
   }

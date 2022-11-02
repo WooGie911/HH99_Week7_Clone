@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import { useDispatch } from "react-redux";
-import Button from "./elements/Button";
-import Input from "./elements/Input";
 import { __addComment } from "../redux/modules/commentSlice";
 import useInput from "../hooks/useInput";
+import styled from "styled-components";
+import EMOlogo from "./icons/댓글 이모티콘.png";
 
 const Comment = (props) => {
   const dispatch = useDispatch();
@@ -31,18 +31,29 @@ const Comment = (props) => {
 
   return (
     <>
-      <Input
+      <STEmo src={EMOlogo} />
+      <input
         placeholder="댓글 달기..."
         value={comments.comment || ""}
         name="comment"
         type="text"
         onChange={onChangeInputHandler}
       />
-      <Button size="small" color="reverse" onClick={onClickAddButton}>
+      <button size="medium" color="reverse" onClick={onClickAddButton}>
         게시
-      </Button>
+      </button>
     </>
   );
 };
 
 export default Comment;
+
+const STEmo = styled.img`
+  /* padding-top: 5px; */
+  margin-top: 10px;
+  width: 20px;
+  height: 20px;
+  border: 0 solid transparent;
+  background-color: transparent;
+  cursor: pointer;
+`;

@@ -2,9 +2,7 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { __SignUp } from "../redux/modules/signupSlice";
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Button from "../components/elements/Button";
 import useInput from "../hooks/useInput";
 
 const SignUp = () => {
@@ -30,9 +28,9 @@ const SignUp = () => {
     ) {
       return alert("입력을 확인하세요.");
     }
-    // if ({input.password} === {input.password2}) {
-    //   return alert("비밀번호가 일치하지 않습니다.");
-    // }
+    if (input.memberPw !== input.pwCheck) {
+      return alert("비밀번호가 일치하지 않습니다.");
+    }
     dispatch(__SignUp(input));
     setInput(initialstate);
   };

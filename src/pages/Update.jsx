@@ -19,28 +19,28 @@ const Update = (props) => {
   const closeModalUpdate = () => {
     props.setModalUpdate(false);
   };
-
+  //수정완료 버튼
   const onClickUpdate = (data) => {
+    if (data.content === "") {
+      return alert("수정할 내용을 입력해주세요.");
+    }
     const formData = new FormData();
     formData.append("content", data.content);
     const Fdata = { postId: data.postId, formData: formData };
     dispatch(__editPost(Fdata));
-    // navigate(`/Detail/${paramsid.id}`);
-    // window.location.replace("/Main");
     console.log("formData", formData);
     console.log("input.postId", input.postId);
     console.log("input", input);
-
-    props.setModalUpdate(false);
+    window.location.replace("/Main");
   };
 
   return (
     <>
       <Background onClick={closeModalUpdate}>
-        <p>상세보기</p>
-        <StModalDetailBT onClick={closeModalUpdate}>X</StModalDetailBT>
         <StModalDetail onClick={(e) => e.stopPropagation()}>
-          <Stlogin_box_Left_img src={input.img} />
+          <Stlogin_box_Left_imgs>
+            {input.img && <Stlogin_box_Left_img src={input.img} />}
+          </Stlogin_box_Left_imgs>
           <Stlogin_box_Right>
             <label>내용</label>
             <Input
@@ -68,10 +68,18 @@ const Update = (props) => {
 export default Update;
 
 const Stlogin_box_Left_img = styled.img`
-  width: 10%;
-  height: 10%;
+  width: 100%;
+  height: 100%;
+  /* color: #ffffff;
+  position: fixed;
+  background-position: center;
+  background-size: cover; */
+`;
+const Stlogin_box_Left_imgs = styled.div`
+  width: 55%;
+  height: 100%;
   color: #ffffff;
-  position: relative;
+  position: fixed;
   background-position: center;
   background-size: cover;
 `;
@@ -80,6 +88,7 @@ const Stlogin_box_Right = styled.div`
   width: 45%;
   height: 100%;
   padding: 25px 25px;
+  position: relative;
   background: linear-gradient(-45deg, #dcd7e0, #fff);
 `;
 

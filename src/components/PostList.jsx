@@ -51,7 +51,7 @@ const PostList = () => {
                     })}
 
                   <div>
-                    {post.likeSize} - {post.commentSize}
+                    ❤️{post.likeSize} - 💭{post.commentSize}
                   </div>
                 </div>
               </STBtn>
