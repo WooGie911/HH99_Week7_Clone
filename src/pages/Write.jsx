@@ -132,6 +132,7 @@ const Write = (props) => {
 
     // window.location.replace("/Main");
     props.setModalWrite(false);
+    window.location.replace("/Main");
   };
 
   return (

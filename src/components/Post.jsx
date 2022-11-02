@@ -4,7 +4,7 @@ import Button from "./elements/Button";
 import { useDispatch, useSelector } from "react-redux";
 import {
   __deletePost,
-  __hartPost,
+  __heartPost,
   _ModalDetail,
 } from "../redux/modules/postSlice";
 import { __getPostDetail } from "../redux/modules/commentSlice";
@@ -13,11 +13,12 @@ import CommentList from "./CommentList";
 import styled from "styled-components";
 import Update from "../pages/Update";
 
-const Post = (props) => {
+const Post = () => {
   const dispatch = useDispatch();
   // const [posts, setPosts] = useState({});
+  const P_id = useSelector((state) => state.comment.P_ID);
   const posts = useSelector((state) => state.comment.post);
-  const GETpost = useSelector((state) => state.post.post);
+
   // console.log("GETpost", GETpost);
   // console.log("props.POSTID", props.POSTID);
   // const [posts, setPosts] = useState(post);
@@ -34,16 +35,18 @@ const Post = (props) => {
   //상세보기 모달창 온오프
   const closeModalDetail = () => {
     dispatch(_ModalDetail(false));
+    window.location.replace("/Main");
   };
 
   //게시글 삭제
   const onPostDelete = (payload) => {
     dispatch(__deletePost(payload));
     dispatch(_ModalDetail(false));
+    window.location.replace("/Main");
   };
   //좋아요 버튼
-  const onHartButton = (payload) => {
-    dispatch(__hartPost(payload));
+  const onheartButton = (payload) => {
+    dispatch(__heartPost(payload));
   };
   //업데이트 모달 선언
   const [modalUpdate, setModalUpdate] = useState(false);
@@ -66,7 +69,7 @@ const Post = (props) => {
   // }, [DETAILpost]);
 
   useEffect(() => {
-    dispatch(__getPostDetail(props.POSTID));
+    dispatch(__getPostDetail(P_id));
   }, [dispatch]);
   return (
     <>
@@ -110,7 +113,9 @@ const Post = (props) => {
             <CommentList POSTID={posts.postId} />
 
             <div>
-              <button onClick={() => onHartButton(posts.postId)}>하트</button>
+              <button onClick={() => onheartButton(posts.postId)}>
+                게시물 하트
+              </button>
               <button>댓글</button>
               <button>공유</button>
               <button>찜 우측정렬</button>

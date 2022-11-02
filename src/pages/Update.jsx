@@ -26,6 +26,11 @@ const Update = (props) => {
     const Fdata = { postId: data.postId, formData: formData };
     dispatch(__editPost(Fdata));
     // navigate(`/Detail/${paramsid.id}`);
+    // window.location.replace("/Main");
+    console.log("formData", formData);
+    console.log("input.postId", input.postId);
+    console.log("input", input);
+
     props.setModalUpdate(false);
   };
 

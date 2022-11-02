@@ -12,8 +12,8 @@ const refreshToken = localStorage.getItem("Refresh_Token");
 console.log(accessToken);
 console.log(refreshToken);
 
-export const __hartPost = createAsyncThunk(
-  "post/__hartPost",
+export const __heartPost = createAsyncThunk(
+  "post/__heartPost",
   async (payload, thunkAPI) => {
     try {
       const data = await axios.get(`http://13.124.38.31/api/likes/${payload}`, {
@@ -121,9 +121,7 @@ export const __editPost = createAsyncThunk(
     console.log("payload", payload);
     try {
       const data = await axios.put(
-        `
-        http://13.124.38.31/api/post/${payload.postId}
-        `,
+        `http://13.124.38.31/api/post/${payload.postId}`,
         payload.formData,
         {
           headers: {
@@ -154,14 +152,14 @@ const postSlice = createSlice({
     },
   },
   extraReducers: {
-    //__hartPost
-    [__hartPost.pending]: (state) => {
+    //__heartPost
+    [__heartPost.pending]: (state) => {
       state.isLoading = true;
     },
-    [__hartPost.fulfilled]: (state, action) => {
+    [__heartPost.fulfilled]: (state, action) => {
       state.isLoading = false;
     },
-    [__hartPost.rejected]: (state, action) => {
+    [__heartPost.rejected]: (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
     },

@@ -3,9 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   __addComment,
   __deleteComment,
-  __hartComment,
+  __heartComment,
+  __getPostDetail,
+  P_id,
 } from "../redux/modules/commentSlice";
-import { __getPostDetail } from "../redux/modules/commentSlice";
+import { _ModalDetail } from "../redux/modules/postSlice";
 
 // import { __getPostDetail } from "../redux/modules/postSlice";
 
@@ -14,16 +16,19 @@ const CommentList = (props) => {
   // const commentList = useSelector((state) => state.comment.post.commentList);
   const commentList = useSelector((state) => state.comment.post.commentList);
   // console.log("commentList", commentList);
+  const P_id = useSelector((state) => state.comment.P_ID);
 
   const onDeleteButton = (payload) => {
     console.log(payload);
     dispatch(__deleteComment(payload));
+    dispatch(_ModalDetail(false));
+    window.location.replace("/Main");
   };
-  const onHartButton = (payload) => {
-    dispatch(__hartComment(payload));
+  const onheartButton = (payload) => {
+    dispatch(__heartComment(payload));
   };
   useEffect(() => {
-    dispatch(__getPostDetail(props.POSTID));
+    dispatch(__getPostDetail(P_id));
   }, [dispatch]);
 
   return (
@@ -36,7 +41,7 @@ const CommentList = (props) => {
                 <div>프로필 이미지</div>
                 <div>
                   {comment.username} : {comment.comment}
-                  <button onClick={() => onHartButton(comment.commentId)}>
+                  <button onClick={() => onheartButton(comment.commentId)}>
                     하트
                   </button>
                   <div>{comment.createdAt}</div>

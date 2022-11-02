@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { __getPostDetail } from "../redux/modules/commentSlice";
+import { __getPostDetail, _P_ID } from "../redux/modules/commentSlice";
 import { _ModalDetail } from "../redux/modules/postSlice";
 import Post from "../components/Post";
 
@@ -11,6 +11,7 @@ const PostList = () => {
 
   //모달 온 함수 선언
   const showModalDetail = (payload) => {
+    dispatch(_P_ID(payload));
     dispatch(__getPostDetail(payload));
     dispatch(_ModalDetail(true));
     console.log("클릭", payload);
@@ -26,7 +27,7 @@ const PostList = () => {
         posts.map((post, index) => {
           return (
             <div key={index}>
-              {ModalDetail && <Post POSTID={post.postId} />}
+              {ModalDetail && <Post />}
               <STBtn
                 onClick={() => {
                   console.log("post.postId", post.postId);

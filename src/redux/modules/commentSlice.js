@@ -3,6 +3,7 @@ import axios from "axios";
 
 const initialState = {
   post: [],
+  P_ID: 0,
   // comment: [],
 };
 
@@ -32,8 +33,8 @@ export const __getPostDetail = createAsyncThunk(
 );
 
 //comment 부분
-export const __hartComment = createAsyncThunk(
-  "post/__hartComment",
+export const __heartComment = createAsyncThunk(
+  "post/__heartComment",
   async (payload, thunkAPI) => {
     try {
       const data = await axios.get(
@@ -144,7 +145,11 @@ const commentSlice = createSlice({
   name: "comment",
   initialState,
 
-  reducers: {},
+  reducers: {
+    _P_ID(state, action) {
+      state.P_ID = action.payload;
+    },
+  },
   extraReducers: {
     //__getPostDetail
     [__getPostDetail.pending]: (state) => {
@@ -161,14 +166,14 @@ const commentSlice = createSlice({
     },
     //comment 부분
 
-    //__hartComment
-    [__hartComment.pending]: (state) => {
+    //__heartComment
+    [__heartComment.pending]: (state) => {
       state.isLoading = true;
     },
-    [__hartComment.fulfilled]: (state, action) => {
+    [__heartComment.fulfilled]: (state, action) => {
       state.isLoading = false;
     },
-    [__hartComment.rejected]: (state, action) => {
+    [__heartComment.rejected]: (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
     },
@@ -222,4 +227,5 @@ const commentSlice = createSlice({
   },
 });
 
+export const { _P_ID } = commentSlice.actions;
 export default commentSlice.reducer;

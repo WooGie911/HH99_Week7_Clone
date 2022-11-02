@@ -26,6 +26,7 @@ const Comment = (props) => {
     setComments({
       Comment: "",
     });
+    window.location.replace("/Main");
   };
 
   return (
