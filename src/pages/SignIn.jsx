@@ -28,93 +28,108 @@ const SignIn = () => {
   };
 
   return (
-    <>
-      <Stbacktitle>
-        <Sttitlediv>
-          <StForm>
-            <input
-              type="text"
-              name="memberEmail"
-              onChange={ChangeInputHandler}
-              placeholder="ID"
-              value={input.memberEmail}
-            />
-            <input
-              type="text"
-              name="memberPw"
-              onChange={ChangeInputHandler}
-              placeholder="PASSWORD"
-              value={input.memberPw}
-            />
-            <Button onClick={onSubmitHandler} size="medium" color="reverse">
-              로그인
-            </Button>
-            <StRight_contact>
-              <h5>계정이 없으신가요?</h5>
-              <StButton
-                onClick={() => {
-                  navigate("/SignUp");
-                }}
-                size="medium"
-                color="reverse"
-              >
-                가입하기
-              </StButton>
-            </StRight_contact>
-          </StForm>
-        </Sttitlediv>
-      </Stbacktitle>
-    </>
+    <StWrapper>
+      <StSignupBox>
+        <StLoginBox>
+          <StImgBox />
+          <StInputBox
+            type="text"
+            name="memberEmail"
+            onChange={ChangeInputHandler}
+            placeholder="ID"
+            value={input.memberEmail}
+          />
+          <StInputBox
+            type="text"
+            name="memberPw"
+            onChange={ChangeInputHandler}
+            placeholder="PASSWORD"
+            value={input.memberPw}
+          />
+          <StButton onClick={onSubmitHandler} size="medium" color="reverse">
+            로그인
+          </StButton>
+          계정이 있으신가요?
+          <StSignupBox
+            onClick={() => {
+              navigate("/SignUp");
+            }}
+          >
+            가입하기
+          </StSignupBox>
+        </StLoginBox>
+      </StSignupBox>
+    </StWrapper>
   );
 };
 
 export default SignIn;
 
-const Sttitlediv = styled.div`
-  width: 350px;
-  height: 575px;
-  border: 1px solid #dbdbdb;
-  margin: 0 0 10px 0;
-  padding: 10px 0 10px 0;
-  position: relative;
-  top: 0px;
-  bottom: 0px;
-  right: 0px;
-  left: 0px;
+const StWrapper = styled.div`
+  width: 100%;
+  height: 100vh;
+  background-color: #fafafa;
   display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 `;
 
-const Stbacktitle = styled.div`
-  box-sizing: border-box;
-  position: relative;
+const StLoginBox = styled.div`
+  width: 400px;
+  height: 500px;
+  background-color: white;
+  border: 1px solid #bababa;
   display: flex;
-  align-content: stretch;
-  align-items: center;
-  flex-direction: row;
   justify-content: center;
-  overflow: hidden;
-  margin-bottom: calc(var(--base-unit) * 11);
-  margin-top: 70px;
+  align-items: center;
+  flex-direction: column;
 `;
-const StForm = styled.form`
-  height: 430.984px;
-  width: 348px;
-  border: 1px solid black;
-  position: relative;
-  top: 60px;
+
+const StImgBox = styled.div`
+  width: 60%;
+  background-image: url("https://blog.kakaocdn.net/dn/SjvFN/btreg3CYQb2/3uu6ofxOgBcoTDzEU1s6q0/img.png");
+  background-size: 100% 100%;
+  height: 230px;
+  margin-top: -20px;
 `;
-const Stinputwrap = styled.div``;
+
+const StSignupBox = styled.div`
+  width: 400px;
+  margin-top: 30px;
+  height: 10vh;
+  background-color: white;
+  border: 1px solid #bababa;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+`;
+
+const StInputBox = styled.input`
+  width: 70%;
+  height: 35px;
+  margin-top: 10px;
+  background-color: #fafafa;
+  border: 1px solid #d4d4d4;
+  border-radius: 5px;
+  &:focus,
+  &:active {
+    outline: none;
+  }
+  padding-left: 10px;
+`;
 
 const StButton = styled.button`
-  background: transparent;
-  border: none;
-  cursor: pointer;
-`;
-
-const StRight_contact = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  align-self: center;
+  width: 70%;
+  height: 35px;
   margin-top: 30px;
+  border: none;
+  color: white;
+  font-weight: 600;
+  font-size: 18px;
+  background-color: ${({ username, password }) =>
+    username !== "" && password !== "" ? "#0095f6" : "#ececec"};
+  cursor: ${({ username, password }) =>
+    username !== "" && password !== "" ? "pointer" : null};
 `;

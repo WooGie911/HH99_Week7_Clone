@@ -35,110 +35,132 @@ const SignUp = () => {
     // }
     dispatch(__SignUp(input));
     setInput(initialstate);
-    navigate("/");
   };
 
   return (
-    <Stbacktitle>
-      <Sttitlediv>
-        <StForm>
-          <input
-            type="text"
-            name="memberEmail"
-            value={input.memberEmail}
-            onChange={changeInputHandler}
-            placeholder="ID"
-          />
-          <input
-            type="text"
-            name="memberName"
-            value={input.memberName}
-            onChange={changeInputHandler}
-            placeholder="사용자 이름"
-          />
+    <StWrapper>
+      <StSignupBox>
+        <StImgBox />
+        <StInputBox
+          type="text"
+          name="memberEmail"
+          value={input.memberEmail}
+          onChange={changeInputHandler}
+          placeholder="ID"
+        />
+        <StInputBox
+          type="text"
+          name="memberName"
+          value={input.memberName}
+          onChange={changeInputHandler}
+          placeholder="사용자 이름"
+        />
 
-          <input
-            type="text"
-            name="memberPw"
-            value={input.memberPw}
-            onChange={changeInputHandler}
-            placeholder="비밀번호"
-          />
-          <input
-            type="text"
-            name="pwCheck"
-            value={input.pwCheck}
-            onChange={changeInputHandler}
-            placeholder="비밀번호확인"
-          />
-          <Button onClick={SubmitHandler} size="medium" color="reverse">
-            가입
-          </Button>
-          <StRight_contact>
-            <h5>계정이 있으신가요?</h5>
-            <StButton
-              onClick={() => {
-                navigate("/");
-              }}
-              size="medium"
-              color="reverse"
-            >
-              로그인
-            </StButton>
-          </StRight_contact>
-        </StForm>
-      </Sttitlediv>
-    </Stbacktitle>
+        <StInputBox
+          type="text"
+          name="memberPw"
+          value={input.memberPw}
+          onChange={changeInputHandler}
+          placeholder="비밀번호"
+        />
+        <StInputBox
+          type="text"
+          name="pwCheck"
+          value={input.pwCheck}
+          onChange={changeInputHandler}
+          placeholder="비밀번호확인"
+        />
+        <StButton onClick={SubmitHandler} size="medium" color="reverse">
+          가입
+        </StButton>
+
+        <StLoginBox>
+          <h5>계정이 있으신가요?</h5>
+          <button
+            onClick={() => {
+              navigate("/");
+            }}
+          >
+            로그인
+          </button>
+        </StLoginBox>
+      </StSignupBox>
+    </StWrapper>
   );
 };
 
 export default SignUp;
 
-const Sttitlediv = styled.div`
-  width: 350px;
-  height: 575px;
-  border: 1px solid #dbdbdb;
-  margin: 0 0 10px 0;
-  padding: 10px 0 10px 0;
-  position: relative;
-  top: 0px;
-  bottom: 0px;
-  right: 0px;
-  left: 0px;
+const StWrapper = styled.div`
+  width: 100%;
+  height: 100vh;
+  background-color: #fafafa;
   display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 `;
 
-const Stbacktitle = styled.div`
-  box-sizing: border-box;
-  position: relative;
+const StSignupBox = styled.div`
+  background-color: white;
+  border: 1px solid #dbdbdb;
+  width: 400px;
+  height: 600px;
   display: flex;
-  align-content: stretch;
-  align-items: center;
-  flex-direction: row;
   justify-content: center;
-  overflow: hidden;
-  margin-bottom: calc(var(--base-unit) * 11);
-  margin-top: 70px;
+  align-items: center;
+  flex-direction: column;
 `;
-const StForm = styled.form`
-  height: 430.984px;
-  width: 348px;
-  border: 1px solid black;
-  position: relative;
-  top: 60px;
+
+const StImgBox = styled.div`
+  background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4jKAVNgwwCGBxuMlIQEeiCrNIZm2JA-D_-g&usqp=CAU");
+  background-size: 100% 100%;
+  height: 130px;
+  width: 75%;
+  margin-bottom: 80px;
 `;
-const Stinputwrap = styled.div``;
+
+const StInputBox = styled.input`
+  background-color: #fafafa;
+  border: 1px solid #dbdbdb;
+  border-radius: 5px;
+  &:focus,
+  &:active {
+    outline: none;
+  }
+  width: 66%;
+  height: 40px;
+  margin-top: 10px;
+  padding-left: 10px;
+`;
 
 const StButton = styled.button`
-  background: transparent;
+  width: 280px;
+  height: 35px;
+  margin-top: 30px;
   border: none;
-  cursor: pointer;
+  color: white;
+  font-size: 20px;
+  border-radius: 7px;
+  background-color: ${({ userid, password, username, nickname }) =>
+    userid !== "" && password !== "" && username !== "" && nickname !== ""
+      ? "#0095f6"
+      : "#ececec"};
+  cursor: ${({ userid, password, username, nickname }) =>
+    userid !== "" && password !== "" && username !== "" && nickname !== ""
+      ? "pointer"
+      : null};
 `;
 
-const StRight_contact = styled.div`
+const StLoginBox = styled.div`
+  width: 400px;
+  height: 10vh;
+  margin-top: 15px;
+  background-color: white;
+  border: 1px solid #dbdbdb;
+  border-radius: 1px solid #bababa;
   display: flex;
-  align-items: center;
   justify-content: center;
-  align-self: center;
-  margin-top: 30px;
+  text-align: center;
+  align-items: center;
 `;
