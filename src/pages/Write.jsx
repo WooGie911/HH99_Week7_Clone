@@ -55,7 +55,7 @@ const Write = () => {
     data.append('content', input.content); //백엔드가 받는
     dispatch(__addPost(data));
     navigate('/Main');
-    console.log('imgs', imgFile);
+    console.log('img', imgFile);
     console.log('datadata', data);
     console.log('컨텐츠', input.content);
   };

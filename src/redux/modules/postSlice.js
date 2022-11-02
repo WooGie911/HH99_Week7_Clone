@@ -29,8 +29,8 @@ export const __getPost = createAsyncThunk(
           "Cache-Control": "no-cache",
         },
       });
-      console.log("겟img사진가니", data)
-      return thunkAPI.fulfillWithValue(data.data.data.imgs);
+      console.log("겟img사진가니", data.data.data)
+      return thunkAPI.fulfillWithValue(data.data.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -69,6 +69,7 @@ export const __addPost = createAsyncThunk(
           `http://13.124.38.31/api/post`,
           // JSON.stringify(payload),
           payload,
+          console.log("포스트 사진가니", payload),
           {
             headers: {
               enctype: "multipart/form-data",
@@ -78,6 +79,7 @@ export const __addPost = createAsyncThunk(
               "Cache-Control": "no-cache",
             },
           }
+          
         )
        
         .then((response) => {

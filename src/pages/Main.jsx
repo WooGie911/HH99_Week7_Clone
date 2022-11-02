@@ -15,43 +15,40 @@ const Main = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const posts = useSelector((state) => state.post.post);
+  console.log('유즈셀렉터', posts);
 
   useEffect(() => {
     dispatch(__getPost());
   }, [dispatch]);
 
-  //모달부분
-  const [showModal, setShowModal] = useState(false);
-  const openModal = () => {
-    setShowModal((prev) => !prev);
-  };
+  // //모달부분
+  // const [showModal, setShowModal] = useState(false);
+  // const openModal = () => {
+  //   setShowModal((prev) => !prev);
+  // };
 
   return (
-    <>
-      <StContainer>
-        <StButton onClick={openModal}>i'm a modal</StButton>
-        <Modal showModal={showModal} setShowModal={setShowModal} />
-        <GlobalStyles />
-      </StContainer>
-    </>
+    <StWrapper>
+      {posts.map((item) => {
+        return (
+          <div key={item.id}>
+            <StPicList src={item.imgs} />
+            <h2> {item.contents}</h2>
+          </div>
+        );
+      })}
+    </StWrapper>
   );
 };
 
 export default Main;
-{
-  /* <div>
-<StWrapper>
-  {posts.map((item) => {
-    return (
-      <div key={item.id}>
-        <StPicList src={item.imgs} />
-        <h2> {item.contents}</h2>
-      </div>
-    );
-  })}
-</StWrapper>
-</div> */
-}
+
+/* <StContainer>
+<StButton onClick={openModal}>i'm a modal</StButton>
+<Modal showModal={showModal} setShowModal={setShowModal} />
+<GlobalStyles />
+</StContainer> */
+
 const StWrapper = styled.div`
   width: 100%;
   display: flex;
