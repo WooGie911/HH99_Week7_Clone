@@ -1,47 +1,103 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import Button from "./elements/Button";
-import Input from "./elements/Input";
-import { useParams } from "react-router-dom";
-import { __addComment } from "../redux/modules/commentSlice";
-import useInput from "../hooks/useInput";
+// import React, { useEffect, useState } from 'react';
+// import { useParams } from 'react-router-dom';
+// import { useDispatch, useSelector } from 'react-redux';
+// import { __deleteComment } from '../redux/modules/commentSlice';
+// import { __editComment } from '../redux/modules/commentSlice';
+// import { __addComment } from '../redux/modules/commentSlice';
 
-const Comment = () => {
-  const dispatch = useDispatch();
-  const paramsid = useParams();
-  const initialState = { comment: "" };
+// const Comment = () => {
+//   const { Id } = useParams();
+//   const dispatch = useDispatch();
+//   const [isEdit, setIsEdit] = useState(false);
+//   const [updatedComment, setUpdatedComment] = useState('');
+//   const { content } = useSelector((state) => state.comment.data);
+//   const { isGlobalEditmode } = useSelector((state) => state.comment);
 
-  //커스텀훅 useInput 사용
-  const [comments, setComments, onChangeInputHandler] = useInput(initialState);
+//   const onDeleteButtonHandler = () => {
+//     const result = window.confirm('삭제하시겠습니까?');
+//     if (result) {
+//       dispatch(__deleteComment(comment.id));
+//     } else {
+//       return;
+//     }
+//   };
 
-  const onClickAddButton = (e) => {
-    e.preventDefault();
-    const Fdata = { id: Number(paramsid.id), comment: comments.comment };
-    if (comments.comment.trim() === "") {
-      return alert("댓글을 입력하세요.");
-    }
-    dispatch(__addComment(Fdata));
-    setComments({
-      name: "",
-      comment: "",
-    });
-  };
+//   const onUpdateButtonHandler = () => {
+//     dispatch(
+//       __updateComment({
+//         id: comment.id,
+//         content: updatedComment,
+//         username: comment.username,
+//         todoId: id,
+//       }),
+//     );
+//     setIsEdit(false);
+//     dispatch(globalEditModeToggle(false));
+//   };
 
-  return (
-    <>
-      <button>하트</button>
-      <Input
-        placeholder="댓글을 입력하세요"
-        value={comments.comment || ""}
-        name="comment"
-        type="text"
-        onChange={onChangeInputHandler}
-      />
-      <Button size="large" color="reverse" onClick={onClickAddButton}>
-        추가하기
-      </Button>
-    </>
-  );
-};
+//   const onChangeEditButtonHandler = () => {
+//     setIsEdit(true);
+//     dispatch(__getComment(comment.id));
+//     dispatch(globalEditModeToggle(true));
+//   };
 
-export default Comment;
+//   const onCancelButtonHandler = () => {
+//     setIsEdit(false);
+//     dispatch(clearComment());
+//     dispatch(globalEditModeToggle(false));
+//   };
+
+//   useEffect(() => {
+//     setUpdatedComment(content);
+//   }, [content]);
+
+//   return (
+//     <div>
+//       {isEdit ? (
+//         <>
+//           <input
+//             type="text"
+//             value={updatedComment}
+//             maxlength={100}
+//             onChange={(event) => {
+//               setUpdatedComment(event.target.value);
+//             }}
+//           />
+//           <button
+//             size="small"
+//             bgColor="#FE531F"
+//             onClick={onCancelButtonHandler}
+//           >
+//             <Text color="#fff">취소</Text>
+//           </button>
+//           <button
+//             size="small"
+//             bgColor="#FE531F"
+//             onClick={onUpdateButtonHandler}
+//           >
+//             <text color="#fff">저장</text>
+//           </button>
+//         </>
+//       ) : (
+//         <>
+//           <text>{comment.username}</text>
+//           <text size="16">{comment.content}</text>
+//           <button
+//             size="small"
+//             bgColor="#FE531F"
+//             disabled={isGlobalEditmode}
+//             onClick={onChangeEditButtonHandler}
+//           ></button>
+//           <button
+//             size="small"
+//             bgColor="#FE531F"
+//             onClick={onDeleteButtonHandler}
+//             disabled={isGlobalEditmode}
+//           ></button>
+//         </>
+//       )}
+//     </div>
+//   );
+// };
+
+// export default Comment;

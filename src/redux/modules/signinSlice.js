@@ -2,8 +2,10 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const initialState = {
-  post: [{}],
-  comment: [],
+  user: [],
+  isLoading: true,
+  error: null,
+  isFinish: false,
 };
 
 export const __Login = createAsyncThunk(

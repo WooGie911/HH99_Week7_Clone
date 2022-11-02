@@ -3,6 +3,9 @@ import axios from "axios";
 
 const initialState = {
   post: [],
+  isLoading: true,
+  error: null,
+ 
 };
 
 const accessToken = localStorage.getItem("Access_Token");
@@ -13,19 +16,21 @@ console.log(refreshToken);
 export const __getPost = createAsyncThunk(
   "post/__getPost",
   async (payload, thunkAPI) => {
+    console.log("겟payload 사진가니", payload)
     try {
+      
       const data = await axios.get(`http://13.124.38.31/api/post`, {
         headers: {
-          // enctype: "multipart/form-data",
-          "Content-Type": `application/json`,
+          enctype: "multipart/form-data",
+          // "Content-Type": `application/json`,
           // Authorization: ` ${accessToken}`,
           Authorization: accessToken,
           RefreshToken: refreshToken,
           "Cache-Control": "no-cache",
         },
       });
-      console.log(data);
-      return thunkAPI.fulfillWithValue(data.data);
+      console.log("겟img사진가니", data)
+      return thunkAPI.fulfillWithValue(data.data.data.imgs);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -36,6 +41,7 @@ export const __getPostDetail = createAsyncThunk(
   "post/__getPostDetail",
   async (payload, thunkAPI) => {
     try {
+      
       const data = await axios.get(`http://13.124.38.31/api/post/${payload}`, {
         headers: {
           "Content-Type": `application/json`,
@@ -45,6 +51,7 @@ export const __getPostDetail = createAsyncThunk(
           "Cache-Control": "no-cache",
         },
       });
+     
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -56,9 +63,7 @@ export const __addPost = createAsyncThunk(
   "post/__addPost",
   async (payload, thunkAPI) => {
     try {
-      console.log(payload);
-      console.log(accessToken);
-      console.log(refreshToken);
+      console.log("포스트payload사진가니", payload)
       await axios
         .post(
           `http://13.124.38.31/api/post`,
@@ -66,19 +71,20 @@ export const __addPost = createAsyncThunk(
           payload,
           {
             headers: {
-              // enctype: "multipart/form-data",
-              "Content-Type": `application/json`,
+              enctype: "multipart/form-data",
+              // "Content-Type": `application/json`,
               Authorization: accessToken,
               RefreshToken: refreshToken,
               "Cache-Control": "no-cache",
             },
           }
         )
+       
         .then((response) => {
-          console.log("response", response.data);
+          console.log("포스트 사진가니", response)
         });
     } catch (error) {
-      console.log("error", error);
+ 
       return thunkAPI.rejectWithValue(error);
     }
   }
@@ -109,7 +115,7 @@ export const __deletePost = createAsyncThunk(
 export const __editPost = createAsyncThunk(
   "post/__editPost",
   async (payload, thunkAPI) => {
-    console.log("payload", payload);
+  
     try {
       const data = await axios.put(
         `
@@ -125,7 +131,7 @@ export const __editPost = createAsyncThunk(
           },
         }
       );
-      console.log("data", data.data);
+
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);

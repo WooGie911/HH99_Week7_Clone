@@ -14,6 +14,7 @@ export const __addComment = createAsyncThunk(
   "comment/__addComment",
   // async 는 프로미스에 새로운 신문법이다. // 언제끝나는지 알려준다.
   async (payload, thunkAPI) => {
+    console.log("야야야",payload)
     try {
       //console.log(payload)
       // payload를 데이터를 넣어줄때까지 실행하지 하지않겠다. //비동기
@@ -23,12 +24,13 @@ export const __addComment = createAsyncThunk(
         {
           headers: {
             "Content-Type": `application/json`,
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: accessToken,
             RefreshToken: refreshToken,
             "Cache-Control": "no-cache",
           },
         }
       );
+      console.log("야야야123123",data.data)
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -41,7 +43,7 @@ export const __deleteComment = createAsyncThunk(
   // async 는 프로미스에 새로운 신문법이다. // 언제끝나는지 알려준다.
   async (payload, thunkAPI) => {
     try {
-      console.log(payload);
+  
       // payload를 데이터를 넣어줄때까지 실행하지 하지않겠다. //비동기
       const data = await axios.delete(
         `http://13.124.38.31/api/comment/${payload}`,
@@ -67,7 +69,7 @@ export const __editComment = createAsyncThunk(
   async (payload, thunkAPI) => {
     //console.log("payload",payload.id)
     try {
-      console.log(payload);
+
       const data = await axios.put(
         `http://13.124.38.31/api/comment/${payload.id}`,
         JSON.stringify(payload.comment),
