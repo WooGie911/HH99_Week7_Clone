@@ -18,6 +18,9 @@ export const __SignUp = createAsyncThunk(
         .then((response) => {
           console.log("회원가입response", response.data.msg);
           alert(`${response.data.msg}`);
+          if ((response.data.msg = "회원가입이 완료되었습니다.")) {
+            window.location.replace("/");
+          }
           return thunkAPI.fulfillWithValue(response.data);
         });
       console.log("회원가입응답", data);
