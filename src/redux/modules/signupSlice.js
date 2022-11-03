@@ -12,7 +12,7 @@ export const __SignUp = createAsyncThunk(
     try {
       console.log(payload);
       const data = await axios
-        .post(`https://jkk.p-e.kr/auth/signup`, payload)
+        .post(`${process.env.REACT_APP_SERVER}/auth/signup`, payload)
         // .post(`${process.env.REACT_APP_SERVER}/auth/signup`, payload)
 
         .then((response) => {

@@ -12,7 +12,7 @@ export const __Login = createAsyncThunk(
     try {
       console.log(payload);
       const data = await axios.post(
-        `https://jkk.p-e.kr/auth/login`,
+        `${process.env.REACT_APP_SERVER}/auth/login`,
         // `${process.env.REACT_APP_SERVER}/auth/login`,
         payload
       );
@@ -38,7 +38,7 @@ export const __Login = createAsyncThunk(
         alert(`${error.response.data.field}가 ${error.response.data.message}`);
       } else if (error.response.data.message !== undefined) {
         //아이디 오류
-        alert(`${error.response.data.field} ${error.response.data.message}`);
+        alert(`${error.response.data.field} ${errsor.response.data.message}`);
       }
       return thunkAPI.rejectWithValue(error);
     }
