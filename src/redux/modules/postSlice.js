@@ -16,17 +16,14 @@ export const __heartPost = createAsyncThunk(
   "post/__heartPost",
   async (payload, thunkAPI) => {
     try {
-      const data = await axios.get(
-        `${process.env.REACT_APP_SERVER}/api/likes/${payload}`,
-        {
-          headers: {
-            "Content-Type": `application/json`,
-            Authorization: accessToken,
-            RefreshToken: refreshToken,
-            "Cache-Control": "no-cache",
-          },
-        }
-      );
+      const data = await axios.get(`https://jkk.p-e.kr/api/likes/${payload}`, {
+        headers: {
+          "Content-Type": `application/json`,
+          Authorization: accessToken,
+          RefreshToken: refreshToken,
+          "Cache-Control": "no-cache",
+        },
+      });
       console.log("response", data);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
@@ -40,7 +37,7 @@ export const __getPost = createAsyncThunk(
   "post/__getPost",
   async (payload, thunkAPI) => {
     try {
-      const data = await axios.get(`${process.env.REACT_APP_SERVER}/api/post`, {
+      const data = await axios.get(`https://jkk.p-e.kr/api/post`, {
         headers: {
           "Content-Type": `application/json`,
           Authorization: accessToken,
@@ -64,7 +61,7 @@ export const __addPost = createAsyncThunk(
     try {
       await axios
         .post(
-          `${process.env.REACT_APP_SERVER}/api/post`,
+          `https://jkk.p-e.kr/api/post`,
           payload,
           // {
           //   headers: {
@@ -99,7 +96,7 @@ export const __deletePost = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const data = await axios.delete(
-        `${process.env.REACT_APP_SERVER}/api/post/${payload}`,
+        `https://jkk.p-e.kr/api/post/${payload}`,
         {
           headers: {
             "Content-Type": `application/json`,
@@ -124,7 +121,7 @@ export const __editPost = createAsyncThunk(
     console.log("payload", payload);
     try {
       const data = await axios.put(
-        `${process.env.REACT_APP_SERVER}/api/post/${payload.postId}`,
+        `https://jkk.p-e.kr/api/post/${payload.postId}`,
         payload.formData,
         {
           headers: {

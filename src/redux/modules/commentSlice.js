@@ -14,17 +14,14 @@ export const __getPostDetail = createAsyncThunk(
   "comment/__getPostDetail",
   async (payload, thunkAPI) => {
     try {
-      const data = await axios.get(
-        `${process.env.REACT_APP_SERVER}/api/post/${payload}`,
-        {
-          headers: {
-            "Content-Type": `application/json`,
-            Authorization: accessToken,
-            RefreshToken: refreshToken,
-            "Cache-Control": "no-cache",
-          },
-        }
-      );
+      const data = await axios.get(`https://jkk.p-e.kr/api/post/${payload}`, {
+        headers: {
+          "Content-Type": `application/json`,
+          Authorization: accessToken,
+          RefreshToken: refreshToken,
+          "Cache-Control": "no-cache",
+        },
+      });
       console.log("__getPostDetail", data.data.data);
       // console.log("response", data);
       return thunkAPI.fulfillWithValue(data.data.data);
@@ -41,7 +38,7 @@ export const __heartComment = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const data = await axios.get(
-        `${process.env.REACT_APP_SERVER}/api/comment/likes/${payload}`,
+        `https://jkk.p-e.kr/api/comment/likes/${payload}`,
         {
           headers: {
             "Content-Type": `application/json`,
@@ -68,7 +65,7 @@ export const __addComment = createAsyncThunk(
       //console.log(payload)
       // payload를 데이터를 넣어줄때까지 실행하지 하지않겠다. //비동기
       const data = await axios.post(
-        `${process.env.REACT_APP_SERVER}/api/comment/${payload.id}`,
+        `https://jkk.p-e.kr/api/comment/${payload.id}`,
         // JSON.stringify(payload.comment),
         payload.comment,
         {
@@ -97,7 +94,7 @@ export const __deleteComment = createAsyncThunk(
       console.log(payload);
       // payload를 데이터를 넣어줄때까지 실행하지 하지않겠다. //비동기
       const data = await axios.delete(
-        `${process.env.REACT_APP_SERVER}/api/comment/${payload}`,
+        `https://jkk.p-e.kr/api/comment/${payload}`,
         {
           headers: {
             "Content-Type": `application/json`,
@@ -124,7 +121,7 @@ export const __editComment = createAsyncThunk(
     try {
       console.log(payload);
       const data = await axios.put(
-        `${process.env.REACT_APP_SERVER}/api/comment/${payload.id}`,
+        `https://jkk.p-e.kr/api/comment/${payload.id}`,
         JSON.stringify(payload.comment),
         {
           headers: {
