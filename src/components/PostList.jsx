@@ -22,11 +22,11 @@ const PostList = () => {
   console.log("ModalDetail", ModalDetail);
 
   return (
-    <>
+    <StPosts>
       {posts &&
         posts.map((post, index) => {
           return (
-            <div key={index}>
+            <StPost key={index}>
               {ModalDetail && <Post />}
               <STBtn
                 onClick={() => {
@@ -35,45 +35,72 @@ const PostList = () => {
                 }}
               >
                 <div>
-                  {post.imgs &&
-                    post.imgs.map((img, INDEX) => {
-                      return (
-                        <img
-                          key={INDEX}
-                          src={img}
-                          style={{
-                            marginTop: "-20px",
-                            width: "250px",
-                            height: "250px",
-                          }}
-                        />
-                      );
-                    })}
-
-                  <div>
+                  <img
+                    src={post.imgs}
+                    style={{
+                      marginTop: "-20px",
+                      width: "300px",
+                      height: "300px",
+                    }}
+                  />
+                  <text className="like">
                     ❤️{post.likeSize} - 💭{post.commentSize}
-                  </div>
+                  </text>
                 </div>
               </STBtn>
-            </div>
+            </StPost>
           );
         })}
-    </>
+    </StPosts>
   );
 };
 
 export default PostList;
 
 const STBtn = styled.div`
-  border: 2px solid transparent;
-  width: 80%;
-  max-width: 250px;
-  border: 3px solid #e4fcef;
+  position: relative;
+  width: 100%;
+  max-width: 300px;
   height: 500x;
   border-radius: 5px;
   padding-top: 20px;
   margin-top: 10px;
-  background-color: #edfaf3;
-  margin-left: 10px;
-  float: right;
+  background-color: rgba(247, 247, 247, 0.884);
+  cursor: pointer;
+
+  .like {
+    display: none;
+  }
+  :hover {
+    .like {
+      display: block;
+      padding: 5px 10px;
+      background-color: #ffffff;
+      opacity: 80%;
+      text-align: center;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+
+  /* :hover{
+    //호버시 좋아요 보이기 기쁨님 도움!!!!
+  } */
+`;
+
+const StPost = styled.div`
+  padding: 10px;
+`;
+const StPosts = styled.div`
+  margin-top: 100px;
+  height: 100%;
+  max-height: 100vh;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-items: baseline;
+  align-items: center;
+  justify-content: start;
 `;

@@ -31,29 +31,42 @@ const Comment = (props) => {
 
   return (
     <>
-      <STEmo src={EMOlogo} />
-      <input
+      <StEmo src={EMOlogo} />
+      <StInput
         placeholder="댓글 달기..."
         value={comments.comment || ""}
         name="comment"
         type="text"
         onChange={onChangeInputHandler}
       />
-      <button size="medium" color="reverse" onClick={onClickAddButton}>
-        게시
-      </button>
+      <StBt onClick={onClickAddButton}>게시</StBt>
     </>
   );
 };
 
 export default Comment;
 
-const STEmo = styled.img`
+const StEmo = styled.img`
   /* padding-top: 5px; */
-  margin-top: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-top: 15px;
   width: 20px;
   height: 20px;
   border: 0 solid transparent;
   background-color: transparent;
   cursor: pointer;
+`;
+const StInput = styled.input`
+  width: 380px;
+  border: transparent;
+  background-color: transparent;
+`;
+const StBt = styled.button`
+  position: absolute;
+  right: 10px;
+  height: 50px;
+  border: transparent;
+  background-color: transparent;
+  color: skyblue;
 `;

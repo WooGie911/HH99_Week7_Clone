@@ -8,9 +8,9 @@ const Layout = (props) => {
 export default Layout;
 
 const StLayout = styled.div`
-  max-width: 1200px;
+  max-width: 100%;
   min-width: 800px;
-  margin: 50px auto;
-  border-radius: 8px;
+  /* margin: 50px auto;
+  border-radius: 8px; */
   /* background-color: white; */
 `;

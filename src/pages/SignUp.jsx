@@ -115,7 +115,7 @@ const StImgBox = styled.div`
   background-size: 100% 100%;
   height: 130px;
   width: 75%;
-  margin-bottom: 80px;
+  margin-bottom: 50px;
 `;
 
 const StInputBox = styled.input`
@@ -155,7 +155,7 @@ const StLoginBox = styled.div`
   height: 10vh;
   margin-top: 15px;
   background-color: white;
-  border: 1px solid #dbdbdb;
+  border-top: 1px solid #dbdbdb;
   border-radius: 1px solid #bababa;
   display: flex;
   justify-content: center;

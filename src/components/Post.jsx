@@ -52,50 +52,65 @@ const Post = () => {
       <Background onClick={closeModalDetail}>
         <StModalDetailBT onClick={closeModalDetail}>X</StModalDetailBT>
         <StModalDetail onClick={(e) => e.stopPropagation()}>
-          <Stmodal_box_Left>
-            <Stmodal_box_Left_img src={posts.img} />
-          </Stmodal_box_Left>
-          <Stmodal_box_Right>
-            <div>
-              <STUser src={Userlogo} />
-              <span>{posts.name}</span>
-              <button onClick={showModalUpdate}>수정하기</button>
+          <St_Modal>
+            <St_Modal_Ca>
+              <div className="title">
+                <a>상세보기</a>
+              </div>
+              <button className="TopBt" onClick={showModalUpdate}>
+                수정
+              </button>
               {modalUpdate && (
                 <Update POSTID={posts.postId} setModalUpdate={setModalUpdate} />
               )}
               <button
+                className="TopBt"
                 onClick={() => {
                   onPostDelete(posts.postId);
                 }}
               >
-                삭제하기
+                삭제
               </button>
-            </div>
+            </St_Modal_Ca>
+            <St_Modal_BOX>
+              <Stmodal_box_Left>
+                <Stmodal_box_Left_img src={posts.img} />
+              </Stmodal_box_Left>
+              <Stmodal_box_Right>
+                <StTop>
+                  <STUser src={Userlogo} />
+                  <span className="TopSp">{posts.name}</span>
+                </StTop>
 
-            <div>
-              <STUser src={Userlogo} />
-              {posts.name} {posts.contents}
-              <CommentList POSTID={posts.postId} />
-            </div>
+                <StContents>
+                  <StContent>
+                    <STUser src={Userlogo} />
+                    <span className="TopSp">{posts.name}</span>
+                    <span className="TopSp"> {posts.contents}</span>
+                  </StContent>
+                  <CommentList POSTID={posts.postId} />
+                </StContents>
 
-            <div>
-              <ButtonBox>
-                <LikeButton onClick={() => onheartButton(posts.postId)}>
-                  {posts.amILike ? "❤️" : "🤍"}
-                </LikeButton>
-                <STComment src={Commentlogo} />
-                <STShare src={Sharelogo} />
-                <STSave src={Savelogo} />
-              </ButtonBox>
+                <StButtons>
+                  <ButtonBox>
+                    <LikeButton onClick={() => onheartButton(posts.postId)}>
+                      {posts.amILike ? "❤️" : "🤍"}
+                    </LikeButton>
+                    <STComment src={Commentlogo} />
+                    <STShare src={Sharelogo} />
+                    <STSave src={Savelogo} />
+                  </ButtonBox>
 
-              <div>좋아요 {posts.likeSize}개</div>
-              <div>{posts.createdAt}</div>
-            </div>
+                  <div className="H4">좋아요 {posts.likeSize}개</div>
+                  <div className="H5">{posts.createdAt}</div>
+                </StButtons>
 
-            <div>
-              <Comment postId={posts.postId} />
-            </div>
-          </Stmodal_box_Right>
+                <StComment>
+                  <Comment postId={posts.postId} />
+                </StComment>
+              </Stmodal_box_Right>
+            </St_Modal_BOX>
+          </St_Modal>
         </StModalDetail>
       </Background>
     </>
@@ -119,7 +134,7 @@ const Background = styled.div`
 const StModalDetail = styled.div`
   /* 모달창 크기 */
   width: 1200px;
-  height: 800px;
+  height: 850px;
   /* 최상단 위치 */
   z-index: 999;
   /* 중앙 배치 */
@@ -131,8 +146,6 @@ const StModalDetail = styled.div`
   /* 모달창 디자인 */
   background-color: gray;
   border-radius: 20px;
-  display: flex;
-  justify-content: space-between;
 `;
 const StModalDetailBT = styled.button`
   position: absolute;
@@ -143,13 +156,53 @@ const StModalDetailBT = styled.button`
   font-size: 50px;
   border: transparent;
 `;
+const St_Modal = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+const St_Modal_Ca = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  height: 50px;
+  background-color: white;
+  border-radius: 10px;
+  .title {
+    flex-grow: 1;
+    font-size: 20px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    position: relative;
+    justify-content: center;
+    justify-items: center;
+  }
+  .TopBt {
+    float: right;
+    position: relative;
+    right: 10px;
+    border: transparent;
+    border-radius: 10px;
+    width: 100px;
+    font-size: 20px;
+    color: skyblue;
+    background-color: transparent;
+  }
+`;
+const St_Modal_BOX = styled.div`
+  display: flex;
+  justify-content: space-between;
+  height: 100%;
+`;
 
 const Stmodal_box_Left_img = styled.img`
   width: 100%;
 `;
 const Stmodal_box_Left = styled.div`
+  display: flex;
+  align-items: center;
+  align-content: center;
   width: 60%;
-  height: 100%;
+  height: 800px;
   color: #ffffff;
   background-color: black;
   border-top-left-radius: 10px;
@@ -157,10 +210,57 @@ const Stmodal_box_Left = styled.div`
 `;
 const Stmodal_box_Right = styled.div`
   width: 40%;
-  height: 100%;
+  height: 800px;
   background: #fff;
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
+  display: flex;
+  flex-direction: column;
+`;
+
+const StTop = styled.div`
+  display: flex;
+  align-items: center;
+  padding-left: 5px;
+  height: 50px;
+  border-bottom: solid 1px;
+  border-color: rgba(161, 157, 157, 0.534);
+  border-bottom-left-radius: 4px;
+  .TopSp {
+    margin-left: 5px;
+  }
+`;
+const StContents = styled.div`
+  flex-grow: 1;
+`;
+
+const StContent = styled.div`
+  display: flex;
+  align-items: center;
+  padding-top: 15px;
+  padding-bottom: 5px;
+  margin-left: 3px;
+  .TopSp {
+    margin-left: 5px;
+  }
+`;
+const StButtons = styled.div`
+  padding-top: 5px;
+  padding-bottom: 8px;
+  border-top: solid 1px;
+  border-color: rgba(161, 157, 157, 0.534);
+  .H4 {
+    font-size: 12px;
+  }
+  .H5 {
+    font-size: 10px;
+  }
+`;
+const StComment = styled.div`
+  display: flex;
+  height: 50px;
+  border-top: solid 1px;
+  border-color: rgba(161, 157, 157, 0.534);
 `;
 
 const STUser = styled.img`
@@ -205,6 +305,8 @@ const STSave = styled.img`
   border: 0 solid transparent;
   background-color: transparent;
   position: relative;
+  right: 10px;
+  position: absolute;
   right: 10px;
   cursor: pointer;
 `;

@@ -41,19 +41,22 @@ const CommentList = (props) => {
           commentList.map((comment, index) => {
             return (
               <div key={index}>
-                <div>
+                <StContent>
                   <STUser src={Userlogo} />
-                  {comment.name} {comment.comment}
-                </div>
-                <LikeButton onClick={() => onheartButton(comment.commentId)}>
-                  {comment.amILike ? "❤️" : "🤍"}
-                </LikeButton>
-                {comment.createdAt} 좋아요 {comment.likeSize}개
+                  <span className="TopSp">{comment.name} </span>
+                  <span className="TopSp"> {comment.comment}</span>
+
+                  <LikeButton onClick={() => onheartButton(comment.commentId)}>
+                    {comment.amILike ? "❤️" : "🤍"}
+                  </LikeButton>
+                </StContent>
+                {comment.createdAt} <strong> 좋아요</strong> {comment.likeSize}
+                개
                 {/* <button onClick={() => onDeleteButton(comment.commentId)}>
                   답글 달기
                 </button> */}
                 <LikeButton onClick={() => onDeleteButton(comment.commentId)}>
-                  🗑
+                  🗑️
                 </LikeButton>
               </div>
             );
@@ -66,34 +69,28 @@ const CommentList = (props) => {
 export default CommentList;
 
 const STUser = styled.img`
-  /* width: 100%; */
   width: 30px;
   height: 30px;
-  /* display: flex;
-  flex-direction: column; */
-  //border-bottom-right-radius: 10px;
-  //border-bottom-left-radius: 10px;
-
-  /* padding-top: 0px; */
-  /* margin-top: 100px; */
-  /* margin-bottom: 100px; */
-  /* margin: auto; */
 `;
 
 const LikeButton = styled.button`
-  /* width: 100%; */
   width: 30px;
   height: 30px;
   border: 0 solid transparent;
   background-color: transparent;
   cursor: pointer;
-  /* display: flex;
-  flex-direction: column; */
-  //border-bottom-right-radius: 10px;
-  //border-bottom-left-radius: 10px;
+  position: absolute;
+  right: 10px;
+`;
 
-  /* padding-top: 0px; */
-  /* margin-top: 100px; */
-  /* margin-bottom: 100px; */
-  /* margin: auto; */
+const StContent = styled.div`
+  display: flex;
+  align-items: center;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  margin-top: 15px;
+  margin-left: 3px;
+  .TopSp {
+    margin-left: 5px;
+  }
 `;

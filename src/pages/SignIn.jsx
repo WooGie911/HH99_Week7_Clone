@@ -76,7 +76,7 @@ const StWrapper = styled.div`
 `;
 
 const StLoginBox = styled.div`
-  width: 400px;
+  width: 600px;
   height: 500px;
   background-color: white;
   border: 1px solid #bababa;
@@ -91,7 +91,6 @@ const StImgBox = styled.div`
   background-image: url("https://blog.kakaocdn.net/dn/SjvFN/btreg3CYQb2/3uu6ofxOgBcoTDzEU1s6q0/img.png");
   background-size: 100% 100%;
   height: 230px;
-  margin-top: -20px;
 `;
 
 const StSignupBox = styled.div`
@@ -99,7 +98,7 @@ const StSignupBox = styled.div`
   margin-top: 30px;
   height: 10vh;
   background-color: white;
-  border: 1px solid #bababa;
+  border-top: 1px solid #bababa;
   display: flex;
   justify-content: center;
   text-align: center;

@@ -44,54 +44,52 @@ const Write = (props) => {
     data.append("content", input.content);
     dispatch(__addPost(data));
     props.setModalWrite(false);
-    window.location.replace("/Main");
+    // window.location.replace("/Main");
   };
   return (
     <>
       <Background onClick={closeModalWrite}>
+        <StModalWriteBT onClick={closeModalWrite}>X</StModalWriteBT>
         <StModalWrite onClick={(e) => e.stopPropagation()}>
-          <StWrapper>
-            <StpostBox>
-              <StpostBox_1>
-                <StLabel>
-                  <StFilename>
-                    <span>새 게시물 만들기</span>
-                  </StFilename>
-                </StLabel>
+          <StpostBox>
+            <StpostBox_1>
+              <StLabel>
+                <StFilename>
+                  <span>새 게시물 만들기</span>
+                </StFilename>
+              </StLabel>
 
-                {imageUrl ? <StImgPreview src={imageUrl}></StImgPreview> : null}
-                <StImageBox
-                  id="imgFiles"
-                  type="file"
-                  accept="image/*"
-                  onChange={onChangeImage}
-                  ref={imgRef}
-                />
+              {imageUrl ? <StImgPreview src={imageUrl}></StImgPreview> : null}
+              <StImageBox
+                id="imgFiles"
+                type="file"
+                accept="image/*"
+                onChange={onChangeImage}
+                ref={imgRef}
+              />
 
-                {percent ? (
-                  <StLabel2>{file.name}</StLabel2>
-                ) : (
-                  <StLabel2>사진을 선택하세요!</StLabel2>
-                )}
-                <STImageButton onClick={() => imgRef.current.click()}>
-                  컴퓨터에서 선택
-                </STImageButton>
-              </StpostBox_1>
-              <StpostBox_2>
-                <StUpload>
-                  <StButton onClick={onSubmit}>공유하기</StButton>
-                  <StModalWriteBT onClick={closeModalWrite}>X</StModalWriteBT>
-                </StUpload>
+              {percent ? (
+                <StLabel2>{file.name}</StLabel2>
+              ) : (
+                <StLabel2>사진을 선택하세요!</StLabel2>
+              )}
+              <STImageButton onClick={() => imgRef.current.click()}>
+                컴퓨터에서 선택
+              </STImageButton>
+            </StpostBox_1>
+            <StpostBox_2>
+              <StUpload>
+                <StButton onClick={onSubmit}>공유하기</StButton>
+              </StUpload>
 
-                <Sttextarea
-                  name="content"
-                  value={input.content}
-                  onChange={contentsChangeHandler}
-                  placeholder="문구 입력 ..."
-                ></Sttextarea>
-              </StpostBox_2>
-            </StpostBox>
-          </StWrapper>
+              <Sttextarea
+                name="content"
+                value={input.content}
+                onChange={contentsChangeHandler}
+                placeholder="문구 입력 ..."
+              ></Sttextarea>
+            </StpostBox_2>
+          </StpostBox>
         </StModalWrite>
       </Background>
     </>
@@ -105,21 +103,17 @@ const Background = styled.div`
   left: 0;
   bottom: 0;
   right: 0;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.185);
   z-index: 0;
 `;
 const StModalWrite = styled.div`
   /* 모달창을 화면 중앙. 최상단에 노출 */
-
   /* 모달창 크기 */
-  width: 1000px;
-  height: 1000px;
-
+  width: 800px;
+  height: 550px;
   /* 최상단 위치 */
   z-index: 999;
-
   /* 중앙 배치 */
-  /* top, bottom, left, right 는 브라우저 기준으로 작동한다. */
   /* translate는 본인의 크기 기준으로 작동한다. */
   position: absolute;
   top: 50%;
@@ -127,31 +121,22 @@ const StModalWrite = styled.div`
   transform: translate(-50%, -50%);
 
   /* 모달창 디자인 */
-  background-color: gray;
-  border: 1px solid black;
-  border-radius: 8px;
-
-  /* 모달창 내부 X버튼 */
+  background-color: rgba(0, 0, 0, 0.185);
+  border: 0 solid transparent;
+  border-radius: 10px;
 `;
 const StModalWriteBT = styled.button`
-  position: relative;
-  left: 5px;
-`;
-
-const StWrapper = styled.div`
-  width: 100%;
-  height: 90vh;
-  background-color: #fafafa;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  overflow: hidden;
-  overflow-x: hidden;
+  position: absolute;
+  right: 50px;
+  top: 30px;
+  background-color: transparent;
+  color: white;
+  font-size: 50px;
+  border: transparent;
 `;
 
 const StpostBox = styled.div`
-  width: 900px;
+  width: 800px;
   height: 550px;
   display: flex;
   justify-content: center;
@@ -171,7 +156,6 @@ const StpostBox_1 = styled.div`
   background-image: url(${insta_file});
   background-repeat: no-repeat;
   background-position: center;
-  position: relative;
 `;
 
 const StLabel = styled.div`
@@ -222,15 +206,15 @@ const StFilename = styled.div`
 `;
 
 const StButton = styled.button`
-  width: 30%;
+  width: 50%;
   height: 30px;
-  //     border:none;
-  //     font-weight:600;
-  //     font-size:18px;
-  //     background: #0095F6;
-  //     border: none;
-  //     color: white;
-  //     cursor: pointer;
+  border: none;
+  font-weight: 600;
+  font-size: 18px;
+  background: white;
+  border: none;
+  color: #0095f6;
+  cursor: pointer;
 `;
 
 const StpostBox_2 = styled.div`

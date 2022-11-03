@@ -31,34 +31,48 @@ const Update = (props) => {
     console.log("formData", formData);
     console.log("input.postId", input.postId);
     console.log("input", input);
-    window.location.replace("/Main");
+    // window.location.replace("/Main");
   };
 
   return (
     <>
       <Background onClick={closeModalUpdate}>
         <StModalDetail onClick={(e) => e.stopPropagation()}>
-          <Stlogin_box_Left_imgs>
-            {input.img && <Stlogin_box_Left_img src={input.img} />}
-          </Stlogin_box_Left_imgs>
-          <Stlogin_box_Right>
-            <label>내용</label>
-            <Input
-              size="textarea"
-              type="text"
-              name="content"
-              value={input.content || ""}
-              onChange={onChangeHandlerInput}
-            />
-            <Button onClick={() => onClickUpdate(input)}>수정완료</Button>
-            <Button
-              onClick={() => {
-                props.setModalUpdate(false);
-              }}
-            >
-              수정취소
-            </Button>
-          </Stlogin_box_Right>
+          <St_Modal>
+            <St_Modal_Ca>
+              <button
+                className="TopBt"
+                onClick={() => {
+                  props.setModalUpdate(false);
+                }}
+              >
+                수정취소
+              </button>
+
+              <div className="title">
+                <a>정보 수정</a>
+              </div>
+
+              <button className="TopBt2" onClick={() => onClickUpdate(input)}>
+                수정완료
+              </button>
+            </St_Modal_Ca>
+
+            <St_Modal_BOX>
+              <Stmodal_box_Left>
+                {input.img && <Stmodal_box_Left_img src={input.img} />}
+              </Stmodal_box_Left>
+              <Stmodal_box_Right>
+                <Input
+                  size="textarea"
+                  type="text"
+                  name="content"
+                  value={input.content || ""}
+                  onChange={onChangeHandlerInput}
+                />
+              </Stmodal_box_Right>
+            </St_Modal_BOX>
+          </St_Modal>
         </StModalDetail>
       </Background>
     </>
@@ -67,70 +81,105 @@ const Update = (props) => {
 
 export default Update;
 
-const Stlogin_box_Left_img = styled.img`
-  width: 100%;
-  height: 100%;
-  /* color: #ffffff;
-  position: fixed;
-  background-position: center;
-  background-size: cover; */
-`;
-const Stlogin_box_Left_imgs = styled.div`
-  width: 55%;
-  height: 100%;
-  color: #ffffff;
-  position: fixed;
-  background-position: center;
-  background-size: cover;
-`;
-
-const Stlogin_box_Right = styled.div`
-  width: 45%;
-  height: 100%;
-  padding: 25px 25px;
-  position: relative;
-  background: linear-gradient(-45deg, #dcd7e0, #fff);
-`;
-
 const Background = styled.div`
   position: fixed;
   top: 0;
   left: 0;
   bottom: 0;
   right: 0;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.185);
   z-index: 0;
+  display: flex;
+  flex-wrap: wrap;
 `;
 
 const StModalDetail = styled.div`
-  /* 모달창을 화면 중앙. 최상단에 노출 */
-
   /* 모달창 크기 */
-  width: 1000px;
-  height: 800px;
-
+  width: 1200px;
+  height: 850px;
   /* 최상단 위치 */
   z-index: 999;
-
   /* 중앙 배치 */
-  /* top, bottom, left, right 는 브라우저 기준으로 작동한다. */
   /* translate는 본인의 크기 기준으로 작동한다. */
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-
   /* 모달창 디자인 */
   background-color: gray;
-  border: 1px solid black;
-  border-radius: 8px;
-
-  /* 모달창 내부 X버튼 */
+  border-radius: 20px;
+  display: flex;
+  justify-content: space-between;
 `;
-const StModalDetailBT = styled.button`
-  .close {
-    position: absolute;
-    right: 10px;
-    top: 10px;
+
+const Stmodal_box_Left_img = styled.img`
+  width: 100%;
+`;
+const Stmodal_box_Left = styled.div`
+  display: flex;
+  align-items: center;
+  align-content: center;
+  width: 55%;
+  height: 800px;
+  color: #ffffff;
+  background-color: black;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+`;
+
+const Stmodal_box_Right = styled.div`
+  width: 45%;
+  height: 800px;
+  background: #fff;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  display: flex;
+  flex-direction: column;
+`;
+
+const St_Modal = styled.div`
+  width: 1200px;
+  display: flex;
+  flex-direction: column;
+`;
+const St_Modal_Ca = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  height: 50px;
+  background-color: white;
+  border-radius: 10px;
+  .title {
+    flex-grow: 1;
+    font-size: 20px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    position: relative;
+    justify-content: center;
+    justify-items: center;
   }
+  .TopBt {
+    position: relative;
+    border: transparent;
+    border-radius: 10px;
+    width: 100px;
+    font-size: 20px;
+    color: skyblue;
+    background-color: transparent;
+  }
+  .TopBt2 {
+    position: relative;
+    right: 100px;
+    border: transparent;
+    border-radius: 10px;
+    width: 100px;
+    font-size: 20px;
+    color: skyblue;
+    background-color: transparent;
+  }
+`;
+const St_Modal_BOX = styled.div`
+  display: flex;
+  justify-content: space-between;
+  height: 100%;
 `;
