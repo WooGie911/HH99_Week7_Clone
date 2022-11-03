@@ -16,7 +16,7 @@ export const __heartPost = createAsyncThunk(
   "post/__heartPost",
   async (payload, thunkAPI) => {
     try {
-      const data = await axios.get(`http://13.124.38.31/api/likes/${payload}`, {
+      const data = await axios.get(`https://jkk.p-e.kr/api/likes/${payload}`, {
         headers: {
           "Content-Type": `application/json`,
           Authorization: accessToken,
@@ -37,7 +37,7 @@ export const __getPost = createAsyncThunk(
   "post/__getPost",
   async (payload, thunkAPI) => {
     try {
-      const data = await axios.get(`http://13.124.38.31/api/post`, {
+      const data = await axios.get(`https://jkk.p-e.kr/api/post`, {
         headers: {
           "Content-Type": `application/json`,
           Authorization: accessToken,
@@ -61,7 +61,7 @@ export const __addPost = createAsyncThunk(
     try {
       await axios
         .post(
-          `http://13.124.38.31/api/post`,
+          `https://jkk.p-e.kr/api/post`,
           payload,
           // {
           //   headers: {
@@ -96,7 +96,7 @@ export const __deletePost = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const data = await axios.delete(
-        `http://13.124.38.31/api/post/${payload}`,
+        `https://jkk.p-e.kr/api/post/${payload}`,
         {
           headers: {
             "Content-Type": `application/json`,
@@ -121,7 +121,7 @@ export const __editPost = createAsyncThunk(
     console.log("payload", payload);
     try {
       const data = await axios.put(
-        `http://13.124.38.31/api/post/${payload.postId}`,
+        `https://jkk.p-e.kr/api/post/${payload.postId}`,
         payload.formData,
         {
           headers: {

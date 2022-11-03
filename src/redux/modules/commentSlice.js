@@ -14,7 +14,7 @@ export const __getPostDetail = createAsyncThunk(
   "comment/__getPostDetail",
   async (payload, thunkAPI) => {
     try {
-      const data = await axios.get(`http://13.124.38.31/api/post/${payload}`, {
+      const data = await axios.get(`https://jkk.p-e.kr/api/post/${payload}`, {
         headers: {
           "Content-Type": `application/json`,
           Authorization: accessToken,
@@ -38,7 +38,7 @@ export const __heartComment = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const data = await axios.get(
-        `http://13.124.38.31/api/comment/likes/${payload}`,
+        `https://jkk.p-e.kr/api/comment/likes/${payload}`,
         {
           headers: {
             "Content-Type": `application/json`,
@@ -65,7 +65,7 @@ export const __addComment = createAsyncThunk(
       //console.log(payload)
       // payload를 데이터를 넣어줄때까지 실행하지 하지않겠다. //비동기
       const data = await axios.post(
-        `http://13.124.38.31/api/comment/${payload.id}`,
+        `https://jkk.p-e.kr/api/comment/${payload.id}`,
         // JSON.stringify(payload.comment),
         payload.comment,
         {
@@ -94,7 +94,7 @@ export const __deleteComment = createAsyncThunk(
       console.log(payload);
       // payload를 데이터를 넣어줄때까지 실행하지 하지않겠다. //비동기
       const data = await axios.delete(
-        `http://13.124.38.31/api/comment/${payload}`,
+        `https://jkk.p-e.kr/api/comment/${payload}`,
         {
           headers: {
             "Content-Type": `application/json`,
@@ -121,7 +121,7 @@ export const __editComment = createAsyncThunk(
     try {
       console.log(payload);
       const data = await axios.put(
-        `http://13.124.38.31/api/comment/${payload.id}`,
+        `https://jkk.p-e.kr/api/comment/${payload.id}`,
         JSON.stringify(payload.comment),
         {
           headers: {

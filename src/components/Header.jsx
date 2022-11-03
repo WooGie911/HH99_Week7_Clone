@@ -16,7 +16,7 @@ const Header = (props) => {
   const onClickHandler = async () => {
     const accessToken = localStorage.getItem("Access_Token");
     const refreshToken = localStorage.getItem("Refresh_Token");
-    const data = await axios.get(`http://13.124.38.31/api/logout`, {
+    const data = await axios.get(`https://jkk.p-e.kr/api/logout`, {
       headers: {
         Authorization: accessToken,
         RefreshToken: refreshToken,
