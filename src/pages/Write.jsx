@@ -44,7 +44,7 @@ const Write = (props) => {
     data.append("content", input.content);
     dispatch(__addPost(data));
     props.setModalWrite(false);
-    // window.location.replace("/Main");
+    window.location.replace("/Main");
   };
   return (
     <>

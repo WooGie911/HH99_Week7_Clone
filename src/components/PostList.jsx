@@ -84,10 +84,6 @@ const STBtn = styled.div`
       transform: translate(-50%, -50%);
     }
   }
-
-  /* :hover{
-    //호버시 좋아요 보이기 기쁨님 도움!!!!
-  } */
 `;
 
 const StPost = styled.div`

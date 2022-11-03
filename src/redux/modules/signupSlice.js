@@ -16,7 +16,8 @@ export const __SignUp = createAsyncThunk(
         // .post(`${process.env.REACT_APP_SERVER}/auth/signup`, payload)
 
         .then((response) => {
-          console.log("회원가입response", response);
+          console.log("회원가입response", response.data.msg);
+          alert(`${response.data.msg}`);
           return thunkAPI.fulfillWithValue(response.data);
         });
       console.log("회원가입응답", data);

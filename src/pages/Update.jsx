@@ -31,7 +31,7 @@ const Update = (props) => {
     console.log("formData", formData);
     console.log("input.postId", input.postId);
     console.log("input", input);
-    // window.location.replace("/Main");
+    window.location.replace("/Main");
   };
 
   return (
