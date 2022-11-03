@@ -96,11 +96,11 @@ const StButton = styled.button`
       case "reverse":
         return css`
           color: white;
-          background-color: #315a47;
+          background-color: #97bfe0;
           &:hover {
             background-color: white;
             border: 0;
-            color: #315a47;
+            color: #97bfe0;
           }
         `;
 
@@ -122,11 +122,11 @@ const StButton = styled.button`
 
       default:
         return css`
-          color: #315a47;
+          color: #97bfe0;
           background-color: white;
           box-shadow: 0px 2px 10px #d4ded9;
           &:hover {
-            background-color: #315a47;
+            background-color: #97bfe0;
             border: 0;
             color: white;
           }
