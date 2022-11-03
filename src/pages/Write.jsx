@@ -2,87 +2,258 @@ import React, { useState, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { __addPost } from "../redux/modules/postSlice";
 import styled from "styled-components";
-import Button from "../components/elements/Button";
-import Input from "../components/elements/Input";
-import Header from "../components/Header";
-import Layout from "../components/Layout";
-import AddImage from "../components/elements/addImage.svg";
-import useInput from "../hooks/useInput";
+import insta_file from "../components/icons/insta_file.PNG";
 
-const Write = () => {
+const Write = (props) => {
   const dispatch = useDispatch();
 
+  //모달창 온오프
+  const closeModalWrite = () => {
+    props.setModalWrite(false);
+  };
+
+  const [input, setInput] = useState({ content: "" });
   const [imageUrl, setImageUrl] = useState(null);
   const [imgFile, setImgFile] = useState("");
+  const [file, setFile] = useState("");
+  const [percent, setPercent] = useState(false);
   const imgRef = useRef();
 
-  //커스텀훅 useInput 사용
-  const [input, setInput, onChangeHandlerInput] = useInput("");
+  const contentsChangeHandler = (e) => {
+    const { name, value } = e.target;
+    setInput({
+      ...input,
+      [name]: value,
+    });
+  };
 
   const onChangeImage = () => {
     const reader = new FileReader();
+
     const file = imgRef.current.files[0];
+    console.log("file", file);
     reader.readAsDataURL(file);
     reader.onloadend = () => {
       setImageUrl(reader.result);
       setImgFile(file);
     };
   };
-
   const onSubmit = (e) => {
-    e.preventDefault();
-    if (input.content === "") {
-      return alert("내용을 입력해 주세요");
-    }
-    const formData = new FormData();
-    formData.append("file", imgFile);
-    formData.append("content", input.content);
-    dispatch(__addPost(formData));
-    for (var pair of formData.entries()) {
-      console.log(pair[0] + ", " + pair[1]);
-    }
-
-    window.location.replace("/Main");
+    const data = new FormData();
+    data.append("img", imgFile);
+    data.append("content", input.content);
+    dispatch(__addPost(data));
+    props.setModalWrite(false);
+    // window.location.replace("/Main");
   };
-
   return (
     <>
-      <Layout>
-        <Header />
-        <div>Write</div>
-        <label htmlFor="imgFile">
-          <img
-            src={imageUrl ? imageUrl : AddImage}
-            style={{
-              marginBottom: "24px",
-              width: "464px",
-              height: "301px",
-            }}
-          />
-          <input
-            style={{ display: "none" }}
-            type="file"
-            id="imgFile"
-            onChange={onChangeImage}
-            accept="image/*"
-            ref={imgRef}
-            name="imgFile"
-            multiple
-          />
-        </label>
-        <Button onClick={onSubmit}> 공유하기</Button>
+      <Background onClick={closeModalWrite}>
+        <StModalWriteBT onClick={closeModalWrite}>X</StModalWriteBT>
+        <StModalWrite onClick={(e) => e.stopPropagation()}>
+          <StpostBox>
+            <StpostBox_1>
+              <StLabel>
+                <StFilename>
+                  <span>새 게시물 만들기</span>
+                </StFilename>
+              </StLabel>
 
-        <label> 내용 </label>
-        <Input
-          size="textarea"
-          placeholder="내용을 입력해주세요"
-          value={input.content || ""}
-          onChange={onChangeHandlerInput}
-          name="content"
-        />
-      </Layout>
+              {imageUrl ? <StImgPreview src={imageUrl}></StImgPreview> : null}
+              <StImageBox
+                id="imgFiles"
+                type="file"
+                accept="image/*"
+                onChange={onChangeImage}
+                ref={imgRef}
+              />
+
+              {percent ? (
+                <StLabel2>{file.name}</StLabel2>
+              ) : (
+                <StLabel2>사진을 선택하세요!</StLabel2>
+              )}
+              <STImageButton onClick={() => imgRef.current.click()}>
+                컴퓨터에서 선택
+              </STImageButton>
+            </StpostBox_1>
+            <StpostBox_2>
+              <StUpload>
+                <StButton onClick={onSubmit}>공유하기</StButton>
+              </StUpload>
+
+              <Sttextarea
+                name="content"
+                value={input.content}
+                onChange={contentsChangeHandler}
+                placeholder="문구 입력 ..."
+              ></Sttextarea>
+            </StpostBox_2>
+          </StpostBox>
+        </StModalWrite>
+      </Background>
     </>
   );
 };
 
 export default Write;
+const Background = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.185);
+  z-index: 0;
+`;
+const StModalWrite = styled.div`
+  /* 모달창을 화면 중앙. 최상단에 노출 */
+  /* 모달창 크기 */
+  width: 800px;
+  height: 550px;
+  /* 최상단 위치 */
+  z-index: 999;
+  /* 중앙 배치 */
+  /* translate는 본인의 크기 기준으로 작동한다. */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  /* 모달창 디자인 */
+  background-color: rgba(0, 0, 0, 0.185);
+  border: 0 solid transparent;
+  border-radius: 10px;
+`;
+const StModalWriteBT = styled.button`
+  position: absolute;
+  right: 50px;
+  top: 30px;
+  background-color: transparent;
+  color: white;
+  font-size: 50px;
+  border: transparent;
+`;
+
+const StpostBox = styled.div`
+  width: 800px;
+  height: 550px;
+  display: flex;
+  justify-content: center;
+`;
+
+const StpostBox_1 = styled.div`
+  background-color: white;
+  border: 1px solid #bababa;
+  border-radius: 15px;
+  width: 500px;
+  height: 550px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  background-image: url(${insta_file});
+  background-repeat: no-repeat;
+  background-position: center;
+`;
+
+const StLabel = styled.div`
+  margin-top: 10px;
+  width: 90%;
+  height: 30px;
+  border-bottom: solid 1px #bababa;
+  position: absolute;
+  top: 0;
+`;
+
+const StLabel2 = styled.div`
+  margin-top: 180px;
+  margin-bottom: 20px;
+`;
+
+const StImageBox = styled.input`
+  display: none;
+`;
+
+const STImageButton = styled.button`
+  background: #0095f6;
+  border: none;
+  color: white;
+  font-size: 13px;
+  width: 120px;
+  height: 30px;
+  border-radius: 5px;
+  cursor: pointer;
+`;
+
+const StImgPreview = styled.img`
+  width: 100%;
+  height: 90%;
+  position: absolute;
+  bottom: 0;
+  &:hover {
+    transform: scale(1.05, 1.05); /* 가로2배 새로 1.5배 로 커짐 */
+    transition: transform 0.5s; /* 커지는 시간 */
+  }
+`;
+
+const StFilename = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const StButton = styled.button`
+  width: 50%;
+  height: 30px;
+  border: none;
+  font-weight: 600;
+  font-size: 18px;
+  background: white;
+  border: none;
+  color: #0095f6;
+  cursor: pointer;
+`;
+
+const StpostBox_2 = styled.div`
+  width: 300px;
+  height: 550px;
+  border: 1px solid #bababa;
+  background-color: #ffffff;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const StUpload = styled.div`
+  width: 80%;
+  margin-top: 10px;
+  height: 30px;
+  display: flex;
+  justify-content: right;
+  border-bottom: 1px solid #bababa;
+`;
+
+const Sttextarea = styled.textarea`
+  width: 80%;
+  border: none;
+  height: 300px;
+  margin-top: 10px;
+  font-size: 15px;
+  padding: 10px;
+  &:focus {
+    outline: none;
+  }
+  resize: none;
+  font-weight: 600;
+`;
+const UploadButton = styled.button`
+  background-color: #ffffff;
+  border: none;
+  color: blue;
+  font-weight: 600;
+  cursor: pointer;
+`;

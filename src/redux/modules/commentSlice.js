@@ -2,41 +2,56 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const initialState = {
-  post: [
-    {
-      id: 1,
-      username: "kim",
-      content: "ㅡㅡ",
-      comment: [
-        { id: 1, comment: "zzzz" },
-        { id: 2, comment: "zssz" },
-        { id: 3, comment: "zzdasdz" },
-      ],
-    },
-    { id: 2, username: "lee", content: "ㅋㅋㅋㅋ" },
-    { id: 3, username: "park", content: "ㅠㅠ" },
-  ],
-  comment: [
-    { id: 1, comment: "zzzz" },
-    { id: 2, comment: "zssz" },
-    { id: 3, comment: "zzdasdz" },
-  ],
+  post: [],
+  P_ID: 0,
+  // comment: [],
 };
 
 const accessToken = localStorage.getItem("Access_Token");
 const refreshToken = localStorage.getItem("Refresh_Token");
 
-//comment 부분
-export const __getComment = createAsyncThunk(
-  "comment/__getComment",
+export const __getPostDetail = createAsyncThunk(
+  "comment/__getPostDetail",
   async (payload, thunkAPI) => {
     try {
-      console.log(payload);
-      const data = await axios.get(
-        `${process.env.REACT_APP_SERVER}/api/comments/${payload}`
-      );
-      return thunkAPI.fulfillWithValue(data.data);
+      const data = await axios.get(`http://13.124.38.31/api/post/${payload}`, {
+        headers: {
+          "Content-Type": `application/json`,
+          Authorization: accessToken,
+          RefreshToken: refreshToken,
+          "Cache-Control": "no-cache",
+        },
+      });
+      console.log("__getPostDetail", data.data.data);
+      // console.log("response", data);
+      return thunkAPI.fulfillWithValue(data.data.data);
     } catch (error) {
+      console.log("error", error);
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+//comment 부분
+export const __heartComment = createAsyncThunk(
+  "post/__heartComment",
+  async (payload, thunkAPI) => {
+    try {
+      const data = await axios.get(
+        `http://13.124.38.31/api/comment/likes/${payload}`,
+        {
+          headers: {
+            "Content-Type": `application/json`,
+            Authorization: accessToken,
+            RefreshToken: refreshToken,
+            "Cache-Control": "no-cache",
+          },
+        }
+      );
+      return console.log("response", data);
+      // return thunkAPI.fulfillWithValue(data.data);
+    } catch (error) {
+      console.log("error", error);
       return thunkAPI.rejectWithValue(error);
     }
   }
@@ -50,19 +65,22 @@ export const __addComment = createAsyncThunk(
       //console.log(payload)
       // payload를 데이터를 넣어줄때까지 실행하지 하지않겠다. //비동기
       const data = await axios.post(
-        `${process.env.REACT_APP_SERVER}/api/comment/${payload.id}`,
-        JSON.stringify(payload.comment),
+        `http://13.124.38.31/api/comment/${payload.id}`,
+        // JSON.stringify(payload.comment),
+        payload.comment,
         {
           headers: {
             "Content-Type": `application/json`,
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: accessToken,
             RefreshToken: refreshToken,
             "Cache-Control": "no-cache",
           },
         }
       );
-      return thunkAPI.fulfillWithValue(data.data);
+      return console.log("response", data);
+      // return thunkAPI.fulfillWithValue(payload.comment);
     } catch (error) {
+      console.log("error", error);
       return thunkAPI.rejectWithValue(error);
     }
   }
@@ -76,19 +94,21 @@ export const __deleteComment = createAsyncThunk(
       console.log(payload);
       // payload를 데이터를 넣어줄때까지 실행하지 하지않겠다. //비동기
       const data = await axios.delete(
-        `${process.env.REACT_APP_SERVER}/api/comment/${payload}`,
+        `http://13.124.38.31/api/comment/${payload}`,
         {
           headers: {
-            enctype: "multipart/form-data",
-            Authorization: `Bearer ${accessToken}`,
+            "Content-Type": `application/json`,
+            Authorization: accessToken,
             RefreshToken: refreshToken,
             "Cache-Control": "no-cache",
           },
         }
       );
       // console.log("페이로드",payload);
-      return thunkAPI.fulfillWithValue(payload);
+      return console.log("response", data);
+      // return thunkAPI.fulfillWithValue(payload);
     } catch (error) {
+      console.log("error", error);
       return thunkAPI.rejectWithValue(error);
     }
   }
@@ -101,19 +121,21 @@ export const __editComment = createAsyncThunk(
     try {
       console.log(payload);
       const data = await axios.put(
-        `${process.env.REACT_APP_SERVER}/api/comment/${payload.id}`,
+        `http://13.124.38.31/api/comment/${payload.id}`,
         JSON.stringify(payload.comment),
         {
           headers: {
             "Content-Type": `application/json`,
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: accessToken,
             RefreshToken: refreshToken,
             "Cache-Control": "no-cache",
           },
         }
       );
-      return thunkAPI.fulfillWithValue(payload);
+      return console.log("response", data);
+      // return thunkAPI.fulfillWithValue(payload);
     } catch (error) {
+      console.log("error", error);
       return thunkAPI.rejectWithValue(error);
     }
   }
@@ -123,18 +145,35 @@ const commentSlice = createSlice({
   name: "comment",
   initialState,
 
-  reducers: {},
+  reducers: {
+    _P_ID(state, action) {
+      state.P_ID = action.payload;
+    },
+  },
   extraReducers: {
-    //comment 부분
-    //__getComment
-    [__getComment.pending]: (state) => {
+    //__getPostDetail
+    [__getPostDetail.pending]: (state) => {
       state.isLoading = true;
     },
-    [__getComment.fulfilled]: (state, action) => {
+    [__getPostDetail.fulfilled]: (state, action) => {
       state.isLoading = false;
-      state.comment = action.payload;
+      state.post = action.payload;
+      // console.log("state.post", state.post);
     },
-    [__getComment.rejected]: (state, action) => {
+    [__getPostDetail.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+    //comment 부분
+
+    //__heartComment
+    [__heartComment.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [__heartComment.fulfilled]: (state, action) => {
+      state.isLoading = false;
+    },
+    [__heartComment.rejected]: (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
     },
@@ -144,7 +183,7 @@ const commentSlice = createSlice({
     },
     [__addComment.fulfilled]: (state, action) => {
       state.isLoading = false;
-      state.comment.push(action.payload);
+      state.post.commentList.push(action.payload);
     },
     [__addComment.rejected]: (state, action) => {
       state.isLoading = false;
@@ -156,8 +195,8 @@ const commentSlice = createSlice({
     },
     [__deleteComment.fulfilled]: (state, action) => {
       state.isLoading = false;
-      state.comment = state.comment.filter(
-        (comment) => comment.id !== action.payload
+      state.post.commentList = state.post.commentList.filter(
+        (comment) => comment.commentId !== action.payload
       );
     },
     [__deleteComment.rejected]: (state, action) => {
@@ -172,7 +211,7 @@ const commentSlice = createSlice({
       state.isLoading = false;
 
       const indexId = state.comment.findIndex((comment) => {
-        if (comment.id == action.payload.id) {
+        if (comment.commentId == action.payload.id) {
           return true;
         }
         return false;
@@ -188,4 +227,5 @@ const commentSlice = createSlice({
   },
 });
 
+export const { _P_ID } = commentSlice.actions;
 export default commentSlice.reducer;
